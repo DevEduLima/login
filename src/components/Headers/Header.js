@@ -20,7 +20,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Tempo de Assistência {/* Título do card */}
+                          Média de Diária{/* Título do card */}
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">350897 H</span> {/* Valor */}
                       </div>
@@ -33,7 +33,7 @@ const Header = () => {
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
                         <i className="fa fa-arrow-up" /> 3.48% {/* Percentual de aumento */}
-                      </span>{" "}
+                      </span>
                     </p>
                   </CardBody>
                 </Card>
@@ -61,7 +61,7 @@ const Header = () => {
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-danger mr-2">
                         <i className="fas fa-arrow-down" /> 3.48% {/* Percentual de diminuição */}
-                      </span>{" "}
+                      </span>   
                       <span className="text-nowrap">todo o pe</span> {/* Texto adicional */}
                     </p>
                   </CardBody>
@@ -90,7 +90,7 @@ const Header = () => {
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-warning mr-2">
                         <i className="fas fa-arrow-down" /> 1.10% {/* Percentual de diminuição */}
-                      </span>{" "}
+                      </span>   
                       <span className="text-nowrap">Since yesterday</span> {/* Texto adicional */}
                     </p>
                   </CardBody>
@@ -119,7 +119,7 @@ const Header = () => {
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
                         <i className="fas fa-arrow-up" /> 12% {/* Percentual de aumento */}
-                      </span>{" "}
+                      </span>   
                       <span className="text-nowrap">Since last month</span> {/* Texto adicional */}
                     </p>
                   </CardBody>

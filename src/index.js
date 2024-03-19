@@ -8,7 +8,7 @@ import "assets/scss/argon-dashboard-react.scss"; // Importa estilos do Argon Das
 
 import AdminLayout from "layouts/Admin.js"; // Importa o layout Admin
 import AuthLayout from "layouts/Auth.js"; // Importa o layout Auth
-import { AuthProvider } from "./context/AuthContext"; // Importa o AuthProvider do contexto de autenticação
+import { AuthProvider } from "./context/AuthContext.js"; // Importa o AuthProvider do contexto de autenticação
 
 // Componente principal da aplicação
 const App = () => {

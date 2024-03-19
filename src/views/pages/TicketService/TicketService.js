@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { Card, Container, CardHeader } from "reactstrap";
+
 import Header from "components/Headers/Header.js";
 import Table from 'components/Table/Table.js';
-import TableColumns from '../../../components/Table/tableColumns';
-import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter'; 
-import LoadingIndicator from 'components/Loading/Loading'; 
+import TableColumns from '../../../components/Table/tableColumns.js';
+import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js'; 
+import LoadingIndicator from 'components/Loading/Loading.js'; 
 
 const TicketService = () => {
   const [protocols, setProtocols] = useState([]);

@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, Container, CardHeader } from 'reactstrap';
 import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
-import LoadingIndicator from 'components/Loading/Loading';
-import TableColumns from '../../../components/Table/tableColumns'; // Importe o arquivo correto para as colunas da tabela
-import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter'; // Importe o componente de contador de protocolos
+import LoadingIndicator from 'components/Loading/Loading.js';
+import TableColumns from '../../../components/Table/tableColumns.js'; 
+import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js';
 
 const customActionMenuOptions = [
   { action: 'detalhes', label: 'Detalhes do Protocolo' },

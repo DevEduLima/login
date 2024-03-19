@@ -53,8 +53,21 @@ const routes = [
     role: ['FISCAL'],
   },
   {
-    path: '/ti',
-    name: 'Ti',
+    path: '/assistente',
+    name: 'Assistente',
+    icon: 'ni ni-laptop text-blue',
+    // Renderiza a página de TI se o usuário estiver autenticado e possuir a função de administrador, caso contrário, redireciona para a página de login
+    component: usuarioAutenticado() ? (
+      <TicketTI />
+    ) : (
+      <Navigate to="/auth/login" />
+    ),
+    layout: '/admin',
+    role: ['ADMIN'],
+  },
+  {
+    path: '/protocolos',
+    name: 'Protocolos',
     icon: 'ni ni-laptop text-blue',
     // Renderiza a página de TI se o usuário estiver autenticado e possuir a função de administrador, caso contrário, redireciona para a página de login
     component: usuarioAutenticado() ? (

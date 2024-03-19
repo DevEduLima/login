@@ -1,9 +1,24 @@
 import React, { useState } from 'react';
-import { Button, Card, CardHeader, CardBody, FormGroup, Form, Input, InputGroupAddon, InputGroupText, InputGroup, Row, Col, Alert } from 'reactstrap';
-import { login } from '../../services/authentication';
-import { Navigate } from 'react-router-dom'; 
-import LoadingIndicator from 'components/Loading/Loading';
-import UserModel from '../../services/UserModel';
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  Row,
+  Col,
+  Alert,
+} from 'reactstrap';
+import { Navigate } from 'react-router-dom';
+import { login } from '../../services/authentication.js';
+
+import LoadingIndicator from 'components/Loading/Loading.js';
+import UserModel from '../../services/UserModel.js';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,41 +29,41 @@ const Login = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Verificar se os campos de email e senha estão preenchidos
     if (!email || !password) {
       setError('Por favor, preencha todos os campos.');
       return;
     }
-  
+
     try {
       setLoading(true);
-  
+
       // Fazer o login e obter os dados do usuário
       const { accessToken, userId } = await login(email, password);
-  
+
       // Criar uma instância do UserModel com o token e o ID de usuário
       const userModel = new UserModel(accessToken, userId);
-      console.log('Modelo de usuário recebido:', userModel);
-  
+
       // Armazenar o modelo de usuário no localStorage
       localStorage.setItem('userModel', JSON.stringify(userModel));
-      
+
       // Limpar os campos de email e senha, e os erros
       setEmail('');
       setPassword('');
       setError('');
-  
+
       // Definir o estado de login como true
       setIsLoggedIn(true);
     } catch (error) {
       console.error('Erro durante a autenticação:', error.message);
-      setError('Credenciais inválidas. Por favor, verifique seu email e senha.');
+      setError(
+        'Credenciais inválidas. Por favor, verifique seu email e senha.'
+      );
     } finally {
       setLoading(false);
     }
   };
-  
 
   if (isLoggedIn) {
     return <Navigate to="/admin/ti" />;
@@ -101,7 +116,12 @@ const Login = () => {
               </InputGroup>
             </FormGroup>
             <div className="text-center">
-              <Button className="my-4" color="primary" type="submit" disabled={loading}>
+              <Button
+                className="my-4"
+                color="primary"
+                type="submit"
+                disabled={loading}
+              >
                 Entrar
               </Button>
               {loading && <LoadingIndicator />}
@@ -109,9 +129,7 @@ const Login = () => {
           </Form>
         </CardBody>
       </Card>
-      <Row className="mt-3">
-        {/* esqueceu a senha  */}
-      </Row>
+      <Row className="mt-3">{/* esqueceu a senha  */}</Row>
     </Col>
   );
 };

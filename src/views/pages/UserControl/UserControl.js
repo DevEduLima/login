@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, Container, CardHeader, Button } from 'reactstrap';
 import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
-import CreateUserModal from '../../../components/CreateUserModal/CreateUserModal';
-import LoadingIndicator from 'components/Loading/Loading';
-import { isAuthenticated } from '../../../services/authenticationService'; // Importa o serviço de autenticação
+import CreateUserModal from '../../../components/CreateUserModal/CreateUserModal.js';
+import LoadingIndicator from 'components/Loading/Loading.js';
+import { isAuthenticated } from '../../../services/authenticationService.js'; 
 
 // Opções personalizadas para o menu de ações
 const customMenuOptions = [

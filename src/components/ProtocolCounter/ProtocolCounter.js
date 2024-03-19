@@ -13,7 +13,7 @@ const ProtocolCounter = ({ totalProtocols }) => {
   }, [totalProtocols]); // Executa o efeito apenas quando totalProtocols mudar
 
   return (
-    <p>Total de protocolos: {total}</p>
+    <p>Protocolos: {total}</p>
   );
 };
 

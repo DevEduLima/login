@@ -6,9 +6,9 @@ import {
 } from 'material-react-table';
 import { Button } from '@mui/material';
 
-import ActionMenu from '../ActionMenu/ActionMenu'; // Importa o componente de menu de ação
-import DetailsDialog from '../ProtocolDetailsDialog/DetailsDialog'; // Importa o componente de diálogo de detalhes do protocolo
-import TableColumns from './tableColumns'; // Importa as configurações das colunas da tabela
+import ActionMenu from '../ActionMenu/ActionMenu.js'; // Importa o componente de menu de ação
+import DetailsDialog from '../ProtocolDetailsDialog/DetailsDialog.js'; // Importa o componente de diálogo de detalhes do protocolo
+import TableColumns from './tableColumns.js'; // Importa as configurações das colunas da tabela
 
 // Componente de Tabela
 const Table = ({
