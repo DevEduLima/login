@@ -1,18 +1,19 @@
 // TicketTI.js
+
 import React, { useState, useEffect } from 'react';
 import { Card, Container, CardHeader } from 'reactstrap';
 import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
-import TableColumns from '../../../components/Table/tableColumns.js'; 
+import TableColumns from '../../../components/Table/TableColumns.js'; 
 import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js';
+import { fetchAllProtocols } from '../../../services/ProtocolRequests.js'; 
 
 const customActionMenuOptions = [
   { action: 'detalhes', label: 'Detalhes do Protocolo' },
-  { action: 'detalhes', label: 'Detalhes do Protocolo' },
 ];
 
-const TicketTI = () => {
+const Protocols = () => {
   // Estado para armazenar os protocolos, estado de carregamento e o total de protocolos
   const [protocols, setProtocols] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,39 +23,10 @@ const TicketTI = () => {
   useEffect(() => {
     const fetchProtocols = async () => {
       try {
-        // Verificar se o usuário está autenticado
-        const userModel = JSON.parse(localStorage.getItem('userModel'));
-        if (!userModel || !userModel.token || !userModel.userId) {
-          // Se o usuário não estiver autenticado, redireciona para a página de login
-          window.location.href = '/login';
-          return;
-        }
-
-        // Configurar os cabeçalhos da requisição
-        const headers = {
-          Authorization: `Bearer ${userModel.token}`,
-        };
-
-        // Fazer a requisição para buscar os protocolos
-        const response = await fetch('http://116.202.20.228:8001/protocols', {
-          headers,
-        });
-        const data = await response.json();
-
-        if (Array.isArray(data)) {
-          // Define os protocolos recebidos do servidor
-          setProtocols(data);
-          // Define o total de protocolos
-          setTotalProtocols(data.length);
-          // Indica que o carregamento foi concluído
-          setLoading(false);
-        } else {
-          console.error(
-            'Dados de protocolos recebidos da API não são um array:',
-            data
-          );
-          setLoading(false);
-        }
+        const protocolsData = await fetchAllProtocols(); // Chama a função fetchAllProtocols para buscar os protocolos
+        setProtocols(protocolsData);
+        setTotalProtocols(protocolsData.length); // Atualiza o total de protocolos
+        setLoading(false); // Indica que o carregamento foi concluído
       } catch (error) {
         console.error('Erro ao buscar protocolos:', error);
         setLoading(false);
@@ -97,16 +69,23 @@ const TicketTI = () => {
               // Renderiza a tabela com os protocolos, passando os dados e configurações necessários
               <Table
                 tableData={protocols.map((protocol) => ({
-                  protocolo: protocol.cod_protocolo,
+                  protocolo: protocol.id,
                   setor: protocol.setor,
                   status: protocol.protocol_status,
                   atendimento: protocol.type_atendimento,
                   user: protocol.obs_user,
                   sistema: protocol.obs_sistema,
                   nome: protocol.nome_cliente,
-                  numero: protocol.telefone_cliente || '',
+                  numero: protocol.telefone_cliente,
                   email: protocol.email_cliente,
                   data: protocol.data,
+                  hora_start: protocol.hora_start,
+                  cpfCnpj: protocol.cpf_cnpj,
+                  fantasia: protocol.nome_fantasia,
+                  end: protocol.hora_end,
+                  conversation: protocol.id_conversation,
+                  iuser: protocol.id_operador,
+                  eoperador: protocol.email_operador,
                   acao: 'Ação',
                 }))}
                 includeActionColumn={false}
@@ -122,4 +101,4 @@ const TicketTI = () => {
   );
 };
 
-export default TicketTI;
+export default Protocols;

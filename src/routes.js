@@ -5,9 +5,10 @@ import { Navigate } from 'react-router-dom';
 import Index from 'views/Index.js';
 import TicketService from 'views/pages/TicketService/TicketService';
 import InspectionTicket from 'views/pages/InspectionTicket/InspectionTicket';
-import TicketTI from 'views/pages/TicketTI/TicketTI';
+import Protocols from 'views/pages/Protocols/Protocols'; 
 import UserControl from 'views/pages/UserControl/UserControl';
 import Login from 'views/Login/Login.js';
+import AssistentTicket from 'views/Assistent/AssistentTicket';
 
 // Função para verificar se o usuário está autenticado
 const usuarioAutenticado = () => {
@@ -37,7 +38,7 @@ const routes = [
       <Navigate to="/auth/login" />
     ),
     layout: '/admin',
-    role: ['ATENDENTE'],
+    role: ['ATENDENTE','SUPERVISOR'], // Role necessária para acessar esta rota
   },
   {
     path: '/inspection-ticket',
@@ -50,20 +51,20 @@ const routes = [
       <Navigate to="/auth/login" />
     ),
     layout: '/admin',
-    role: ['FISCAL'],
+    role: ['FISCAL'], // Role necessária para acessar esta rota
   },
   {
     path: '/assistente',
     name: 'Assistente',
     icon: 'ni ni-laptop text-blue',
-    // Renderiza a página de TI se o usuário estiver autenticado e possuir a função de administrador, caso contrário, redireciona para a página de login
+    // Renderiza o componente AssistentTicket se o usuário estiver autenticado, caso contrário, redireciona para a página de login
     component: usuarioAutenticado() ? (
-      <TicketTI />
+      <AssistentTicket />
     ) : (
       <Navigate to="/auth/login" />
     ),
     layout: '/admin',
-    role: ['ADMIN'],
+    role: ['ADMIN'], // Role necessária para acessar esta rota
   },
   {
     path: '/protocolos',
@@ -71,12 +72,12 @@ const routes = [
     icon: 'ni ni-laptop text-blue',
     // Renderiza a página de TI se o usuário estiver autenticado e possuir a função de administrador, caso contrário, redireciona para a página de login
     component: usuarioAutenticado() ? (
-      <TicketTI />
+      <Protocols />
     ) : (
       <Navigate to="/auth/login" />
     ),
     layout: '/admin',
-    role: ['ADMIN'],
+    role: ['ADMIN'], // Role necessária para acessar esta rota
   },
   {
     path: '/register',
@@ -89,7 +90,7 @@ const routes = [
       <Navigate to="/auth/login" />
     ),
     layout: '/admin',
-    role: ['ADMIN'],
+    role: ['ADMIN'], // Role necessária para acessar esta rota
   },
   {
     path: '/login',

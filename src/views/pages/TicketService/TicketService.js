@@ -1,73 +1,69 @@
-// TicketService.js
-
 import React, { useState, useEffect } from "react";
 import { Card, Container, CardHeader } from "reactstrap";
-
 import Header from "components/Headers/Header.js";
 import Table from 'components/Table/Table.js';
-import TableColumns from '../../../components/Table/tableColumns.js';
-import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js'; 
+import TableColumns from '../../../components/Table/TableColumns.js';
 import LoadingIndicator from 'components/Loading/Loading.js'; 
+import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js'; 
 
+import { fetchProtocolByEmailOperator } from '../../../services/ProtocolRequests.js'; 
+
+// Define a ordem das colunas da tabela
+const columnOrder = ['protocolo', 'setor', 'nome', 'numero', 'email', 'data'];
+// Configuração das colunas da tabela
+const columnsConfig = TableColumns(false, columnOrder);
+
+// Componente TicketService
 const TicketService = () => {
+  // Estado para armazenar os protocolos
   const [protocols, setProtocols] = useState([]);
-  const [loading, setLoading] = useState(true); // Adicionando o estado de loading
-  const [totalProtocols, setTotalProtocols] = useState(0); // Estado para armazenar o total de protocolos
+  // Estado para indicar se a página está carregando
+  const [loading, setLoading] = useState(true);
+  // Estado para armazenar o total de protocolos
+  const [totalProtocols, setTotalProtocols] = useState(0);
 
-  const columnOrder = ['protocolo', 'setor', 'nome', 'numero', 'email', 'data', 'acao',];
-  const columnsConfig = TableColumns(false, columnOrder);
-
-  const menuOptions = [
-    { action: 'editar', label: 'Editar Ticket' },
-    { action: 'encaminhar', label: 'Encaminhar Ticket' },
-    // Adicione mais opções conforme necessário
-  ];
-
+  // Efeito para buscar os protocolos ao montar o componente
   useEffect(() => {
     const fetchData = async () => {
-      const userModel = JSON.parse(localStorage.getItem('userModel'));
-
-      if (!userModel || !userModel.token || !userModel.userId) {
-        window.location.href = '/login';
-        return;
-      }
-
-      const headers = {
-        Authorization: `Bearer ${userModel.token}`
-      };
-      
       try {
-        const emailOperador = 'seu-email@example.com';
-        const response = await fetch(`http://116.202.20.228:8001/protocols/email_operador/${emailOperador}`, { headers });
-        const data = await response.json();
+        const userModel = JSON.parse(localStorage.getItem('userModel')); // Obtém as informações do usuário logado
+        const emailOperador = userModel.email; // Usa o email do usuário logado para a requisição
+        
+        // Busca os protocolos pelo email do operador
+        const data = await fetchProtocolByEmailOperator(emailOperador);
+        // Atualiza o estado dos protocolos
         setProtocols(data);
-        setTotalProtocols(data.length); // Atualiza o total de protocolos
-        setLoading(false); // Defina como false após a conclusão do carregamento
+        // Define o carregamento como concluído
+        setLoading(false);
+
+        // Atualiza o total de protocolos com base nos protocolos encontrados
+        setTotalProtocols(data.length);
       } catch (error) {
         console.error('Erro ao buscar dados:', error);
-        setLoading(false); // Defina como false em caso de erro
+        // Define o carregamento como concluído mesmo em caso de erro
+        setLoading(false);
       }
     };
 
-    fetchData();
+    fetchData(); // Executa a função fetchData ao montar o componente
   }, []);
 
   return (
     <>
-      <Header />
-      <Container className="mt--7" fluid>
-        <Card className="shadow">
-          <CardHeader>
-            <div className="d-flex justify-content-between p-2 mb-3">
-              <h3 className="d-flex align-items-center text-uppercase text-primary">
+      <Header /> {/* Renderiza o cabeçalho */}
+      <Container className="mt--7" fluid> {/* Container fluido para envolver os elementos */}
+        <Card className="shadow"> {/* Cartão com sombra */}
+          <CardHeader> {/* Cabeçalho do cartão */}
+            <div className="d-flex justify-content-between p-2 mb-3"> {/* Div para alinhar os itens horizontalmente */}
+              <h3 className="d-flex align-items-center text-uppercase text-primary"> {/* Título */}
                 Contagem de Protocolos
               </h3>
-              <ProtocolCounter totalProtocols={totalProtocols} /> {/* Aqui é onde você insere o contador de protocolos */}
+              <ProtocolCounter totalProtocols={totalProtocols} /> {/* Contador de protocolos */}
             </div>
-            {loading ? ( // Verifica se a página está carregando
+            {loading ? ( // Condição para verificar se a página está carregando
               <LoadingIndicator /> // Se estiver carregando, exibe o indicador de carregamento
             ) : (
-              <Table
+              <Table // Tabela para exibir os protocolos
                 tableData={protocols.map((protocol) => ({ // Mapeia os protocolos para os dados da tabela
                   protocolo: protocol.cod_protocolo,
                   setor: protocol.setor,
@@ -76,15 +72,13 @@ const TicketService = () => {
                   user: protocol.obs_user,
                   sistema: protocol.obs_sistema,
                   nome: protocol.nome_cliente,
-                  numero: protocol.telefone_cliente || '', // Se o número não estiver disponível, defina como uma string vazia
+                  numero: protocol.telefone_cliente, 
                   email: protocol.email_cliente,
                   data: protocol.data,
-                  acao: 'Ação', // Defina a ação para cada linha
                 }))}
-                includeActionColumn={false} // Ativa a coluna de ação
-                visibleColumns={columnOrder}
+
+                visibleColumns={columnOrder} // Colunas visíveis
                 columnsConfig={columnsConfig} // Passa as configurações das colunas
-                actionMenuOptions={menuOptions} // Opções personalizadas para o menu de ações
               />
             )}
           </CardHeader>
@@ -94,4 +88,4 @@ const TicketService = () => {
   );
 };
 
-export default TicketService;
+export default TicketService; // Exporta o componente TicketService

@@ -27,6 +27,11 @@ class UserModel {
   getUserId() {
     return this.userId; // Retorna o ID de usuário
   }
+
+  // Método para obter o email do usuário
+  getEmail() {
+    return this.email; // Retorna o email do usuário
+  }
 }
 
-export default UserModel; // Exporta a classe UserModel para uso em outros arquivos
+export default UserModel; // Exporta a classe UserModel

@@ -20,7 +20,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Média de Diária{/* Título do card */}
+                          Total de horas do assitente{/* Título do card */}
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">350897 H</span> {/* Valor */}
                       </div>

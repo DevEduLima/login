@@ -6122,7 +6122,7 @@ a.close.disabled {
   max-height: calc(100% - 1rem);
 }
 .modal-dialog-scrollable .modal-content {
-  max-height: calc(100vh - 1rem);
+  max-height: z(100vh - 1rem);
   overflow: hidden;
 }
 .modal-dialog-scrollable .modal-header,
@@ -6168,6 +6168,7 @@ a.close.disabled {
   border-radius: 0.4375rem;
   box-shadow: 0 15px 35px rgba(50, 50, 93, 0.2), 0 5px 15px rgba(0, 0, 0, 0.17);
   outline: 0;
+  padding-right: 0;
 }
 
 .modal-backdrop {

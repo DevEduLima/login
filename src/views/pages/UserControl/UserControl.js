@@ -1,153 +1,142 @@
+// UserControl.js
+
 import React, { useState, useEffect } from 'react';
 import { Card, Container, CardHeader, Button } from 'reactstrap';
 import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
-import CreateUserModal from '../../../components/CreateUserModal/CreateUserModal.js';
+import UserModal from '../../../components/UserModal/UserModal.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
-import { isAuthenticated } from '../../../services/authenticationService.js'; 
+import { isAuthenticated } from '../../../services/AuthenticationService.js';
+import { fetchData } from '../../../services/Requests.js';
 
-// Opções personalizadas para o menu de ações
+// Opções personalizadas para o menu de ação
 const customMenuOptions = [
-  { action: 'editar', label: 'Editar Usuário' },
-  { action: 'detalhes', label: 'Detalhes do Usuário' },
-  // Adicione mais opções conforme necessário
+  { action: 'editUser', label: 'Editar Usuário' },
 ];
 
 const UserControl = () => {
-  // Estado para controlar a exibição do modal de criação de usuário
-  const [showCreateUserModal, setShowCreateUserModal] = useState(false);
-  // Estado para armazenar os dados do novo usuário
+  // Estado para controlar a exibição do modal de usuário
+  const [showUserModal, setShowUserModal] = useState(false);
+  // Estado para armazenar os dados do usuário selecionado no modal
   const [userData, setUserData] = useState({
     nome: '',
     email: '',
     senha: '',
-    nivelAcesso: 'opcao1',
+    nivelAcesso: '',
   });
-  // Estado para armazenar os usuários retornados pela API
+  // Estado para armazenar os usuários recuperados do servidor
   const [users, setUsers] = useState([]);
   // Estado para controlar o carregamento dos dados
   const [loading, setLoading] = useState(true);
-  // Estado para controlar a paginação da tabela
-  const [pagination, setPagination] = useState({ pageIndex: 0, rowsPerPage: 10 });
+  // Estado para indicar se o modal está no modo de edição
+  const [isEditMode, setIsEditMode] = useState(false);
 
-  // Efeito para buscar os usuários ao carregar o componente
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        // Verificar se o usuário está autenticado
-        if (!isAuthenticated()) {
-          // Se não estiver autenticado, redirecione para a página de login
-          window.location.href = '/login';
-          return;
-        }
-
-        // Obter o token de autenticação do localStorage
-        const headers = {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        };
-
-        // Requisição para obter os usuários da API
-        const response = await fetch('http://116.202.20.228:8001/users', {
-          headers,
-        });
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          // Definir os usuários no estado e indicar que o carregamento foi concluído
-          setUsers(data);
-          setLoading(false);
-        } else {
-          console.error('Dados de usuários recebidos da API não são um array:', data);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar usuários:', error);
-        setLoading(false);
+  // Função para buscar os usuários do servidor
+  const fetchUsers = async () => {
+    try {
+      // Verifica se o usuário está autenticado
+      if (!isAuthenticated()) {
+        // Redireciona para a página de login se não estiver autenticado
+        window.location.href = '/login';
+        return;
       }
-    };
 
+      // Busca os usuários do servidor
+      const usersData = await fetchData('users');
+      // Atualiza o estado dos usuários
+      setUsers(usersData);
+      // Define o carregamento como concluído
+      setLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar usuários:', error.message);
+      // Define o carregamento como concluído mesmo em caso de erro
+      setLoading(false);
+    }
+  };
+
+  // Efeito para buscar os usuários ao montar o componente
+  useEffect(() => {
     fetchUsers();
   }, []);
 
-  // Função para lidar com a mudança de página na tabela
-  const handlePageChange = (newPageIndex) => {
-    setPagination({ ...pagination, pageIndex: newPageIndex });
-  };
-
-  // Função para lidar com a mudança de quantidade de linhas por página na tabela
-  const handleRowsPerPageChange = (event) => {
-    const newRowsPerPage = Number(event.target.value);
-    // Atualizar a paginação e voltar para a primeira página
-    setPagination({ ...pagination, rowsPerPage: newRowsPerPage, pageIndex: 0 });
-  };
-
-  // Função para lidar com a mudança nos campos de entrada do formulário de criação de usuário
+  // Função para atualizar o estado dos inputs do modal de usuário
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     setUserData({ ...userData, [id]: value });
   };
 
-  // Função para lidar com o salvamento do novo usuário
-  const handleSaveUser = () => {
-    console.log('Salvando usuário:', userData);
-    setShowCreateUserModal(false);
+  // Função para abrir o modal de edição de usuário
+  const handleToggleEditModal = (userId) => {
+    // Encontra o usuário selecionado
+    const selected = users.find((user) => user.id === userId);
+    // Define os dados do usuário no estado
+    setUserData(selected);
+    // Define o modo de edição como verdadeiro
+    setIsEditMode(true);
+    // Abre o modal
+    setShowUserModal(true);
   };
 
-  // Função para alternar a exibição do modal de criação de usuário
-  const handleToggleModal = () => {
-    setShowCreateUserModal(!showCreateUserModal);
+  // Função para abrir o modal de criação de usuário
+  const handleCreateUserModal = () => {
+    // Limpa os dados do usuário no estado
+    setUserData({
+      name: '',
+      email: '',
+      senha: '',
+      nivelAcesso: '',
+    });
+    // Define o modo de edição como falso
+    setIsEditMode(false);
+    // Abre o modal
+    setShowUserModal(true);
   };
 
   return (
     <>
-      {/* Componente de cabeçalho */}
-      <Header />
-      {/* Container principal */}
-      <Container className="mt--7" >
-        <Card className="shadow">
-          {/* Modal de criação de usuário */}
-          <CreateUserModal
-            isOpen={showCreateUserModal}
-            toggle={handleToggleModal}
-            userData={userData}
-            handleInputChange={handleInputChange}
-            handleSaveUser={handleSaveUser}
+      <Header /> {/* Renderiza o cabeçalho */}
+      <Container className="mt--7"> {/* Container para envolver os elementos */}
+        <Card className="shadow"> {/* Cartão com sombra */}
+          <UserModal
+            isOpen={showUserModal} // Propriedade para controlar a exibição do modal
+            toggle={() => setShowUserModal(!showUserModal)} // Função para alternar a exibição do modal
+            userData={userData} // Dados do usuário a serem exibidos no modal
+            handleInputChange={handleInputChange} // Função para lidar com a mudança nos inputs do modal
+            handleCancel={() => setShowUserModal(false)} // Função para lidar com o cancelamento do modal
+            isEditMode={isEditMode} // Indica se o modal está no modo de edição
+            userId={userData.id} // ID do usuário a ser editado
+            setLoading={setLoading} // Função para atualizar o estado de carregamento
+            fetchUsers={fetchUsers} // Função para buscar os usuários
           />
-
-          {/* Cabeçalho do card */}
-          <CardHeader>
-            {/* Botão para abrir o modal de criação de usuário */}
-            <div className="d-flex justify-content-between p-2 mb-3">
-              <h3 className="d-flex align-items-center text-uppercase text-primary">
+          <CardHeader> {/* Cabeçalho do cartão */}
+            <div className="d-flex justify-content-between p-2 mb-3"> {/* Div para alinhar os itens horizontalmente */}
+              <h3 className="d-flex align-items-center text-uppercase text-primary"> {/* Título */}
                 Cadastro de usuários
               </h3>
-              <Button
-                color="primary"
-                onClick={handleToggleModal}
-              >
+              <Button color="primary" onClick={handleCreateUserModal}> {/* Botão para criar usuário */}
                 Criar Usuário
               </Button>
             </div>
-
-            {/* Exibir indicador de carregamento ou a tabela de usuários */}
-            {loading ? (
+            {loading ? ( // Condição para renderizar o indicador de carregamento
               <LoadingIndicator />
             ) : (
-              <Table
-                tableData={users.map((user) => ({
+              <Table // Tabela para exibir os usuários
+                tableData={users.map((user) => ({ // Mapeia os usuários para os dados da tabela
                   id: user.id,
                   nome: user.name,
                   email: user.email,
                   acao: 'Ação',
-                }))}
-                includeActionColumn={false}
-                visibleColumns={['id', 'nome', 'email', 'acao']}
-                showSpecialColumns={true}
-                enableRowClick={false}
-                actionMenuOptions={customMenuOptions}
-                pageIndex={pagination.pageIndex}
-                rowsPerPage={pagination.rowsPerPage}
-                onPageChange={handlePageChange}
-                onRowsPerPageChange={handleRowsPerPageChange}
+                })).sort((a, b) => a.id - b.id)} // Ordena os dados pelo ID do usuário
+                includeActionColumn={true} // Inclui a coluna de ação
+                visibleColumns={['id', 'nome', 'email', 'acao']} // Colunas visíveis
+                showSpecialColumns={true} // Exibe as colunas especiais
+                enableRowClick={false} // Desabilita o clique nas linhas da tabela
+                actionMenuOptions={customMenuOptions} // Opções do menu de ação
+                onMenuItemClick={(action, userId) => { // Função para lidar com o clique nas opções do menu de ação
+                  if (action === 'editUser') { // Se a ação for editar usuário
+                    handleToggleEditModal(userId); // Abre o modal de edição
+                  }
+                }}
               />
             )}
           </CardHeader>
@@ -157,4 +146,4 @@ const UserControl = () => {
   );
 };
 
-export default UserControl;
+export default UserControl; // Exporta o componente UserControl

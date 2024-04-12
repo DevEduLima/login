@@ -100,7 +100,9 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
       align: 'center',
     },
   },
+
   // Adicione mais definições de colunas conforme necessário
+
 });
 
 export default TableColumns;
