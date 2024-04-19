@@ -73,8 +73,9 @@ const AssistentTicket = () => {
                   fantasia: protocol.nome_fantasia,
                   end: protocol.hora_end,
                   conversation: protocol.id_conversation,
-                  iuser: protocol.id_operador,
-                  eoperador: protocol.email_operador,
+                  id_user: protocol.id_operador,
+                  email_operador: protocol.email_operador,
+                  cod_protocolo:protocol.cod_protocolo,
                 }))}
                 includeActionColumn={false} // Não inclui a coluna de ação
                 enableRowClick={true} // Habilita o clique nas linhas da tabela

@@ -15,7 +15,7 @@ const App = () => {
   return (
     <BrowserRouter> {/* Componente para prover a navegação do lado do cliente */}
       <Routes> {/* Componente para definir as rotas */}
-        <Route path="/admin/*" element={<AdminLayout />} /> {/* Rota para o layout Admin */}
+        <Route path="/admin/*" element={<AdminLayout />}/> {/* Rota para o layout Admin */}
         <Route path="/auth/*" element={<AuthLayout />} /> {/* Rota para o layout Auth */}
         <Route path="*" element={<Navigate to="/admin/index" replace />} /> {/* Rota padrão para redirecionar para o layout Admin */}
       </Routes>

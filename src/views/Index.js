@@ -43,7 +43,7 @@ const Index = (props) => {
 
   return (
     <>
-      <Header /> {/* Renderiza o componente Header */}
+      <Header/> {/* Renderiza o componente Header */}
       {/* Conteúdo da página */}
       <Container className="mt--7" fluid>
         {/* Container fluido para envolver os elementos */}
@@ -77,7 +77,7 @@ const Index = (props) => {
                           className={classnames('py-2 px-3', {
                             active: activeNav === 1, // Adiciona a classe 'active' se a navegação estiver ativa
                           })}
-                          href="#pablo"
+                          href="#"
                           onClick={(e) => toggleNavs(e, 1)} // Função para alternar entre os itens de navegação
                         >
                           <span className="d-none d-md-block">Mês</span>
@@ -205,7 +205,7 @@ const Index = (props) => {
                     <td>340</td> {/* Célula com o número de usuários únicos */}
                     <td>
                       {/* Célula com a taxa de rejeição */}
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
+                      <i className="fas fa-arrow-up text-success mr-3"/>46,53%
                       {/* Ícone de seta para cima */}
                     </td>
                   </tr>
@@ -234,7 +234,7 @@ const Index = (props) => {
                       onClick={(e) => e.preventDefault()} // Previne o comportamento padrão do evento
                       size="sm"
                     >
-                      See all {/* Botão para ver todos */}
+                      See all
                     </Button>
                   </div>
                 </Row>
@@ -247,7 +247,7 @@ const Index = (props) => {
                     {/* Linha da tabela */}
                     <th scope="col">Referral</th> {/* Cabeçalho da coluna */}
                     <th scope="col">Visitors</th> {/* Cabeçalho da coluna */}
-                    <th scope="col" /> {/* Cabeçalho da coluna vazio */}
+                    <th scope="col"/> {/* Cabeçalho da coluna vazio */}
                   </tr>
                 </thead>
                 <tbody>
@@ -269,12 +269,11 @@ const Index = (props) => {
                             max="100"
                             value="60"
                             barClassName="bg-gradient-danger" // Classe para estilizar a barra de progresso
-                          />
+                         />
                         </div>
                       </div>
                     </td>
                   </tr>
-                  {/* Outras linhas da tabela (comentadas) */}
                 </tbody>
               </Table>
             </Card>

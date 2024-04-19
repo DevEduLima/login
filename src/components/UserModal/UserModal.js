@@ -18,11 +18,11 @@ const UserModal = ({
   toggle,
   userData,
   handleInputChange,
-  handleCancel,
+  handleCancel, 
   isEditMode,
   setLoading,
   fetchUsers,
-  userId,
+  userId
 }) => {
   const { name, email, password, role } = userData || {};
   const [formValid, setFormValid] = useState(false); // Estado para controlar a validade do formulário
@@ -99,6 +99,8 @@ const UserModal = ({
               autoComplete="username"
               value={email || ''}
               onChange={handleInputChanged} // Alterado para chamar handleInputChanged
+              disabled={isEditMode} // Adicione esta linha
+
             />
           </FormGroup>
           {!isEditMode && (

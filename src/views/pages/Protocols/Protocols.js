@@ -1,13 +1,13 @@
-// TicketTI.js
-
 import React, { useState, useEffect } from 'react';
 import { Card, Container, CardHeader } from 'reactstrap';
 import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
-import TableColumns from '../../../components/Table/TableColumns.js'; 
+import TableColumns from '../../../components/Table/TableColumns.js';
 import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js';
-import { fetchAllProtocols } from '../../../services/ProtocolRequests.js'; 
+import {
+  fetchAllProtocols,
+} from '../../../services/ProtocolRequests.js';
 
 const customActionMenuOptions = [
   { action: 'detalhes', label: 'Detalhes do Protocolo' },
@@ -19,20 +19,22 @@ const Protocols = () => {
   const [loading, setLoading] = useState(true);
   const [totalProtocols, setTotalProtocols] = useState('');
 
+  // Função para buscar os protocolos
+  const fetchProtocols = async () => {
+    try {
+      // Busca todos os protocolos
+      const protocolsData = await fetchAllProtocols();
+      setProtocols(protocolsData);
+      setTotalProtocols(protocolsData.length); // Atualiza o total de protocolos
+      setLoading(false); // Indica que o carregamento foi concluído
+    } catch (error) {
+      console.error('Erro ao buscar protocolos:', error);
+      setLoading(false);
+    }
+  };
+
   // Efeito para buscar os protocolos ao montar o componente
   useEffect(() => {
-    const fetchProtocols = async () => {
-      try {
-        const protocolsData = await fetchAllProtocols(); // Chama a função fetchAllProtocols para buscar os protocolos
-        setProtocols(protocolsData);
-        setTotalProtocols(protocolsData.length); // Atualiza o total de protocolos
-        setLoading(false); // Indica que o carregamento foi concluído
-      } catch (error) {
-        console.error('Erro ao buscar protocolos:', error);
-        setLoading(false);
-      }
-    };
-
     fetchProtocols();
   }, []);
 
@@ -84,8 +86,9 @@ const Protocols = () => {
                   fantasia: protocol.nome_fantasia,
                   end: protocol.hora_end,
                   conversation: protocol.id_conversation,
-                  iuser: protocol.id_operador,
-                  eoperador: protocol.email_operador,
+                  id_user: protocol.id_operador,
+                  email_operador: protocol.email_operador,
+                  cod_protocolo: protocol.cod_protocolo,
                   acao: 'Ação',
                 }))}
                 includeActionColumn={false}

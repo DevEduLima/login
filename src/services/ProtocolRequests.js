@@ -118,5 +118,6 @@ const fetchProtocolsByType = async (protocolType) => {
   }
 };
 
+
 // Exporta as funções para uso em outros arquivos
 export { fetchAllProtocols, fetchProtocolByEmailOperator, fetchProtocolById, fetchProtocolByCode, fetchProtocolsByType };
