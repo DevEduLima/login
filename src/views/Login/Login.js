@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Card, CardHeader, CardBody, FormGroup, Form, Input, InputGroupAddon, InputGroupText, InputGroup, Row, Col, Alert } from 'reactstrap';
 import { Navigate } from 'react-router-dom';
-import { login } from '../../services/Authentication.js';
+import { login } from '../../services/authentication.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
 import UserModel from '../../services/UserModel.js';
 

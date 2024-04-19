@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from './AuthenticationService'; // Importa a função getToken do arquivo authUtils.js
+import { getToken } from './authenticationService'; // Importa a função getToken do arquivo authUtils.js
 
 const API_URL = 'https://smartprotocols.intgov.com.br';
 

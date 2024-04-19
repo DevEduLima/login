@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Container, CardHeader } from 'reactstrap'; 
 import Header from 'components/Headers/Header.js'; 
 import Table from 'components/Table/Table.js'; 
-import TableColumns from '../../components/Table/TableColumns.js';
+import TableColumns from 'components/Table/tableColumns.js';
 import ProtocolCounter from '../../components/ProtocolCounter/ProtocolCounter.js'; 
 import LoadingIndicator from 'components/Loading/Loading.js'; 
 import { fetchProtocolsByType } from '../../services/ProtocolRequests.js'; 

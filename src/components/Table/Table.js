@@ -7,7 +7,7 @@ import { Button } from '@mui/material';
 import { useMaterialReactTable, MRT_TableContainer as MRTTableContainer } from 'material-react-table';
 import ActionMenu from '../ActionMenu/ActionMenu';
 import DetailsDialog from '../ProtocolDetailsDialog/DetailsDialog';
-import TableColumns from './TableColumns.js'; // Importa as configurações das colunas da tabela
+import TableColumns from './tableColumns'; // Importa as configurações das colunas da tabela
 
 const Table = ({
   tableData,

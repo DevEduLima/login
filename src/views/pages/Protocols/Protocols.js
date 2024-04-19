@@ -3,7 +3,7 @@ import { Card, Container, CardHeader } from 'reactstrap';
 import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
-import TableColumns from '../../../components/Table/TableColumns.js';
+import TableColumns from '../../../components/Table/tableColumns.js';
 import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js';
 import {
   fetchAllProtocols,

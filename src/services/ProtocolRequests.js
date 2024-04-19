@@ -3,7 +3,7 @@
 // Este arquivo contém funções para fazer requisições à API relacionadas a protocolos.
 
 import axios from 'axios';
-import { getToken } from './AuthenticationService';
+import { getToken } from './authenticationService';
 
 // URL base da API
 const API_URL = 'https://smartprotocols.intgov.com.br';

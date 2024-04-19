@@ -6,7 +6,7 @@ import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
 import UserModal from '../../../components/UserModal/UserModal.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
-import { isAuthenticated } from '../../../services/AuthenticationService.js';
+import { isAuthenticated } from '../../../services/authenticationService.js';
 import { fetchData } from '../../../services/Requests.js';
 
 // Opções personalizadas para o menu de ação
