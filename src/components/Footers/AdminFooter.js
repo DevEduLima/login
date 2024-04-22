@@ -13,7 +13,7 @@ const Footer = () => {
             © {new Date().getFullYear()}{" "} {/* Exibe o ano atual */}
             <a
               className="font-weight-bold ml-1"
-              href="#"
+              href="https://www.crtba.org.br/"
               rel="noopener noreferrer"
               target="_blank"
             >

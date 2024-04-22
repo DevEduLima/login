@@ -8,13 +8,13 @@ import InspectionTicket from 'views/pages/InspectionTicket/InspectionTicket';
 import Protocols from 'views/pages/Protocols/Protocols'; 
 import UserControl from 'views/pages/UserControl/UserControl';
 import Login from 'views/Login/Login.js';
-import AssistentTicket from 'views/Assistent/AssistentTicket';
+import AssistentTicket from 'views/pages/Assistent/AssistentTicket';
 
 // Função para verificar se o usuário está autenticado
 const usuarioAutenticado = () => {
   // Lógica para verificar se o usuário está autenticado
   // Por exemplo, verificar se há um token de autenticação no localStorage
-  return localStorage.getItem('userModel') !== null;
+  return localStorage.getItem('userRole') !== null;
 };
 
 // Rotas do aplicativo

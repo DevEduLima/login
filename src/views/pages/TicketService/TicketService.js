@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Card, Container, CardHeader } from "reactstrap";
 import Header from "components/Headers/Header.js";
 import Table from 'components/Table/Table.js';
-import TableColumns from '../../../components/Table/tableColumns.js';
+import TableColumns from 'components/Table/tableColumns.js';
 import LoadingIndicator from 'components/Loading/Loading.js'; 
-import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js'; 
+import ProtocolCounter from 'components/ProtocolCounter/ProtocolCounter.js'; 
 
 import { fetchProtocolByEmailOperator } from '../../../services/ProtocolRequests.js'; 
 

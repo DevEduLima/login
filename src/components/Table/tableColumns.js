@@ -21,7 +21,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'protocolo',
     header: 'Protocolo',
     grow: false,
-    size: 50,
+    size: 40,
     align: 'center',
     show: visibleColumns.includes('protocolo'), // Verifica se a coluna está incluída nas colunas visíveis
     muiTableHeadCellProps: {
@@ -73,7 +73,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'numero',
     header: 'Número',
     grow: false,
-    size: 100,
+    size: 50,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('numero'),
@@ -89,7 +89,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'data',
     header: 'Data',
     grow: false,
-    size: 100,
+    size: 50,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('data'),

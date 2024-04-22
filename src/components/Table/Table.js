@@ -1,12 +1,8 @@
-// Table.js
-
-// Este arquivo contém o componente de tabela usado para exibir os dados na interface do usuário.
-
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { useMaterialReactTable, MRT_TableContainer as MRTTableContainer } from 'material-react-table';
-import ActionMenu from '../ActionMenu/ActionMenu';
-import DetailsDialog from '../ProtocolDetailsDialog/DetailsDialog';
+import ActionMenu from 'components/ActionMenu/ActionMenu';
+import DetailsDialog from 'components/ProtocolDetailsDialog/DetailsDialog';
 import TableColumns from './tableColumns'; // Importa as configurações das colunas da tabela
 
 const Table = ({
@@ -26,39 +22,21 @@ const Table = ({
   // Estado para controlar o índice da página atual
   const [pageIndex, setPageIndex] = useState(0);
   // Estado para controlar o número de linhas por página
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   // Estado para armazenar o elemento ancora do menu de ação
   const [anchorEl, setAnchorEl] = useState(null);
-
-  // Função para lidar com a página anterior
-  const handlePreviousPage = () => {
-    const newPageIndex = Math.max(pageIndex - 1, 0);
-    setPageIndex(newPageIndex);
-    table.setPageIndex(newPageIndex);
-  };
-
-  // Verifica se é possível avançar para a próxima página
-  const canGoToNextPage = tableData && tableData.length > (pageIndex + 1) * rowsPerPage;
-
-  // Função para lidar com a próxima página
-  const handleNextPage = () => {
-    if (canGoToNextPage) {
-      const newPageIndex = pageIndex + 1;
-      setPageIndex(newPageIndex);
-      table.setPageIndex(newPageIndex);
-    }
-  };
 
   // Função para lidar com a mudança do número de linhas por página
   const handleRowsPerPageChange = (event) => {
     const newRowsPerPage = Number(event.target.value);
     setRowsPerPage(newRowsPerPage);
-    setPageIndex(0);
+    setPageIndex(0); // Reset da página para a primeira quando o número de linhas por página muda
     table.setPageSize(newRowsPerPage);
   };
 
   // Função para lidar com o clique no menu de ação
   const handleMenuClick = (event, rowData) => {
+    console.log('Protocol ID:', rowData.id); // Adicione este console.log para verificar o valor de row.original.id
     setAnchorEl(event.currentTarget);
     setSelectedItem(rowData);
   };
@@ -81,8 +59,27 @@ const Table = ({
     }
   };
 
+  // Função para lidar com a página anterior
+  const handlePreviousPage = () => {
+    const newPageIndex = Math.max(pageIndex - 1, 0);
+    setPageIndex(newPageIndex);
+    table.setPageIndex(newPageIndex);
+  };
+
+  // Verifica se é possível avançar para a próxima página
+  const canGoToNextPage = tableData && tableData.length > (pageIndex + 1) * rowsPerPage;
+
+  // Função para lidar com a próxima página
+  const handleNextPage = () => {
+    if (canGoToNextPage) {
+      const newPageIndex = pageIndex + 1;
+      setPageIndex(newPageIndex);
+      table.setPageIndex(newPageIndex);
+    }
+  };
+
   // Ordena os dados da tabela pela data de criação, do mais recente para o mais antigo
-  tableData.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
+  tableData.sort((a, b) => parseInt(b.cod_protocolo) - parseInt(a.cod_protocolo));
 
   // Configuração das colunas da tabela
   const columns = useMemo(() => {
@@ -99,7 +96,8 @@ const Table = ({
             onMenuClose={handleMenuClose}
             onMenuItemClick={onMenuItemClick}
             menuOptions={customActionMenuOptions || actionMenuOptions}
-            userId={row.original.id}
+            protocolId={row.original.id}
+
           />
         ),
         show: !visibleColumns || visibleColumns.includes('acao'),
@@ -115,7 +113,7 @@ const Table = ({
 
   // Formata os dados da tabela antes de passá-los para a tabela
   const data = useMemo(() => {
-    const formattedData = tableData.map(item => {
+    const formatarHora = tableData.map(item => {
       return {
         ...item,
         data: new Date(item.data).toLocaleDateString(),
@@ -123,10 +121,9 @@ const Table = ({
       };
     });
   
-    const reversedData = formattedData.reverse();
-  
-    return reversedData;
+    return formatarHora; // retornando formatarHora diretamente, sem inverter a ordem
   }, [tableData]);
+  
 
   // Configuração e inicialização da tabela usando o hook useMaterialReactTable
   const table = useMaterialReactTable({
@@ -146,6 +143,11 @@ const Table = ({
       },
     },
   });
+
+  // Atualiza o estado da página atual sempre que os protocolos forem recarregados
+  useEffect(() => {
+    setPageIndex(0);
+  }, [tableData]);
 
   // Renderiza o componente de tabela
   return (
@@ -176,6 +178,7 @@ const Table = ({
         <div className="rows-per-page-control align-items-center mt-2">
           <span className="mr-1">Linhas por Página:</span>
           <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+            <option value={5}>5</option>
             <option value={10}>10</option>
             <option value={25}>25</option>
             <option value={50}>50</option>

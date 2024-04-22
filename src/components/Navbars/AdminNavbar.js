@@ -1,7 +1,6 @@
-// AdminNavbar.js
-
-import React from 'react'; // Importa o módulo React
-import { Link } from 'react-router-dom'; // Importa o componente Link do React Router DOM
+// Importações necessárias do React e do React Router DOM, juntamente com os componentes do Reactstrap
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownItem,
@@ -11,81 +10,72 @@ import {
   Nav,
   Container,
   Media,
-} from 'reactstrap'; // Importa componentes do Reactstrap
+} from 'reactstrap';
 
 // Componente AdminNavbar para a barra de navegação do administrador
 const AdminNavbar = ({ handleLogout }) => {
-  // Define o componente com a função de logout como propriedade
-
   // Obtém o nome, email e papel do usuário do armazenamento local
   const userName = localStorage.getItem('userName');
   const userEmail = localStorage.getItem('userEmail');
   const userRole = localStorage.getItem('userRole');
 
+  // Função para limpar os itens do local storage ao fazer logout
+  const handleLogoutClick = () => {
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userRole');
+    handleLogout(); // Chama a função de logout após limpar o local storage
+  };
+
   return (
     <>
-      {/* Fragmento React para retornar múltiplos elementos */}
+      {/* Navbar para exibir a barra de navegação */}
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
-        {/* Navbar escura */}
+        {/* Container fluido para envolver os elementos */}
         <Container fluid>
-          {/* Container fluido para envolver os elementos */}
+          {/* Link para a página inicial */}
           <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
           >
             Inicio
           </Link>
-          {/* Link para a página inicial */}
+          {/* Itens de navegação */}
           <Nav className="align-items-center d-none d-md-flex" navbar>
-            {/* Itens de navegação */}
+            {/* Dropdown não controlado para o perfil do usuário */}
             <UncontrolledDropdown nav>
-              {/* Dropdown não controlado para o perfil do usuário */}
+              {/* Toggle do dropdown */}
               <DropdownToggle className="pr-0" nav>
-                {/* Toggle do dropdown */}
+                {/* Media para exibir a imagem e o nome do usuário */}
                 <Media className="align-items-center">
-                  {/* Media para exibir a imagem e o nome do usuário */}
-                  {/* <span className="avatar avatar-sm rounded-circle"> //avatar do usuário
-                    <img alt="..." src={require('../../assets/img/theme/team-4-800x800.jpg')} />
-                  </span> */}
+                  {/* Nome do usuário */}
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
                       {userName}
                     </span>
-                    {/* Nome do usuário */}
                   </Media>
                 </Media>
               </DropdownToggle>
+              {/* Menu do dropdown */}
               <DropdownMenu className="dropdown-menu-arrow" right>
-                {/* Menu do dropdown */}
+                {/* Título do menu */}
                 <DropdownItem className="noti-title" header tag="div">
-                  {/* Título do menu */}
                   <h6 className="text-overflow m-0">Bem Vindo!</h6>
                 </DropdownItem>
+                {/* Item do menu para o email do usuário */}
                 <DropdownItem to="/admin/user-profile">
-                  {/* Item do menu para o email do usuário */}
                   <i className="ni ni-email-83" />
                   <span>{userEmail}</span>
                 </DropdownItem>
+                {/* Item do menu para o papel do usuário */}
                 <DropdownItem to="/admin/user-profile">
-                  {/* Item do menu para o papel do usuário */}
                   <i className="ni ni-pin-3" />
                   <span>{userRole}</span>
                 </DropdownItem>
-                {/* <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-single-02" />
-                  <span>Meu perfil</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-settings-gear-65" />
-                  <span>configurações</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-calendar-grid-58" />
-                  <span>atividade</span>
-                </DropdownItem> */}
-                <DropdownItem divider /> {/* Divisor */}
-                <DropdownItem onClick={handleLogout}>
-                  {/* Item do menu para sair com a função de logout */}
+                {/* Divisor */}
+                <DropdownItem divider />
+                {/* Item do menu para sair com a função de logout */}
+                <DropdownItem onClick={handleLogoutClick}>
                   <i className="ni ni-user-run" />
                   <span>Sair</span>
                 </DropdownItem>

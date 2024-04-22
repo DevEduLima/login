@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 
 
-import { createUser, updateUser } from '../../services/Requests'; // Importa as funções createUser e updateUser
+import { createUser, updateUser } from 'services/Requests'; // Importa as funções createUser e updateUser
 
 const UserModal = ({
   isOpen,

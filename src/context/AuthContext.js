@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import UserModel from '../services/UserModel'; // Importe o UserModel
+import UserModel from 'services/UserModel'; // Importe o UserModel
 
 const AuthContext = createContext();
 

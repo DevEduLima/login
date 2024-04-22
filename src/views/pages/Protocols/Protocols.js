@@ -3,14 +3,14 @@ import { Card, Container, CardHeader } from 'reactstrap';
 import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
-import TableColumns from '../../../components/Table/tableColumns.js';
-import ProtocolCounter from '../../../components/ProtocolCounter/ProtocolCounter.js';
+import TableColumns from 'components/Table/tableColumns.js';
+import ProtocolCounter from 'components/ProtocolCounter/ProtocolCounter.js';
 import {
   fetchAllProtocols,
-} from '../../../services/ProtocolRequests.js';
+} from 'services/ProtocolRequests.js';
 
 const customActionMenuOptions = [
-  { action: 'detalhes', label: 'Detalhes do Protocolo' },
+  { action: 'status', label: 'Alterar Status do Protocolo' },
 ];
 
 const Protocols = () => {
@@ -43,7 +43,6 @@ const Protocols = () => {
     'protocolo',
     'setor',
     'nome',
-    'numero',
     'email',
     'data',
     'acao',
@@ -71,7 +70,7 @@ const Protocols = () => {
               // Renderiza a tabela com os protocolos, passando os dados e configurações necessários
               <Table
                 tableData={protocols.map((protocol) => ({
-                  protocolo: protocol.id,
+                  protocolo: protocol.cod_protocolo, //exibi o codigo do protocolo na tabela
                   setor: protocol.setor,
                   status: protocol.protocol_status,
                   atendimento: protocol.type_atendimento,

@@ -10,24 +10,24 @@ const API_URL = 'https://smartprotocols.intgov.com.br';
 
 // Função para buscar todos os protocolos
 const fetchAllProtocols = async () => {
-    try {
-      // Obtém o token de autenticação
-      const token = getToken();
-      // Configura os headers da requisição
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-  
-      // Faz a requisição GET para obter todos os protocolos
-      const response = await axios.get(`${API_URL}/protocols/`, { headers });
-  
-      return response.data;
-    } catch (error) {
-      // Em caso de erro, exibe uma mensagem de erro no console e lança o erro novamente
-      console.error('Erro ao buscar todos os protocolos:', error.message);
-      throw error;
-    }
+  try {
+    // Obtém o token de autenticação
+    const token = getToken();
+    // Configura os headers da requisição
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    // Faz a requisição GET para obter todos os protocolos
+    const response = await axios.get(`${API_URL}/protocols/`, { headers });
+
+    return response.data;
+  } catch (error) {
+    // Em caso de erro, exibe uma mensagem de erro no console e lança o erro novamente
+    console.error('Erro ao buscar todos os protocolos:', error.message);
+    throw error;
+  }
 };
 
 // Função para buscar protocolos pelo email do operador
@@ -38,16 +38,22 @@ const fetchProtocolByEmailOperator = async (emailOperator) => {
     // Configura os headers da requisição
     const headers = {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
 
     // Faz a requisição GET para obter os protocolos pelo email do operador
-    const response = await axios.get(`${API_URL}/protocols/email_operador/${emailOperator}/`, { headers });
+    const response = await axios.get(
+      `${API_URL}/protocols/email_operador/${emailOperator}/`,
+      { headers }
+    );
 
     return response.data;
   } catch (error) {
     // Em caso de erro, exibe uma mensagem de erro no console e lança o erro novamente
-    console.error('Erro ao buscar protocolos por email de operador:', error.message);
+    console.error(
+      'Erro ao buscar protocolos por email de operador:',
+      error.message
+    );
     throw error;
   }
 };
@@ -60,11 +66,13 @@ const fetchProtocolById = async (protocolId) => {
     // Configura os headers da requisição
     const headers = {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
 
     // Faz a requisição GET para obter o protocolo pelo ID
-    const response = await axios.get(`${API_URL}/protocol/${protocolId}/`, { headers });
+    const response = await axios.get(`${API_URL}/protocol/${protocolId}/`, {
+      headers,
+    });
 
     return response.data;
   } catch (error) {
@@ -82,11 +90,13 @@ const fetchProtocolByCode = async (protocolCode) => {
     // Configura os headers da requisição
     const headers = {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
 
     // Faz a requisição GET para obter o protocolo pelo código
-    const response = await axios.get(`${API_URL}/protocol/${protocolCode}/`, { headers });
+    const response = await axios.get(`${API_URL}/protocol/${protocolCode}/`, {
+      headers,
+    });
 
     return response.data;
   } catch (error) {
@@ -104,11 +114,14 @@ const fetchProtocolsByType = async (protocolType) => {
     // Configura os headers da requisição
     const headers = {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
 
     // Faz a requisição GET para obter os protocolos pelo tipo
-    const response = await axios.get(`${API_URL}/protocols/type/${protocolType}`, { headers });
+    const response = await axios.get(
+      `${API_URL}/protocols/type/${protocolType}`,
+      { headers }
+    );
 
     return response.data;
   } catch (error) {
@@ -118,6 +131,34 @@ const fetchProtocolsByType = async (protocolType) => {
   }
 };
 
+// Função para atualizar o status do protocolo
+const updateProtocolStatus = async (protocolId, newStatus) => {
+  try {
+    console.log('Protocol ID:', protocolId); // Verifica o valor de protocolId
+    const token = getToken(); // Certifique-se de definir corretamente a função getToken() para obter o token de autorização
+    console.log('Token:', token); // Verifica o valor do token
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+    const response = await axios.put(`${API_URL}/protocol/${protocolId}`, {
+      protocol_status: newStatus,
+    }, { headers });
+
+    console.log('Resposta da atualização de status:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao atualizar status do protocolo:', error);
+    throw error;
+  }
+};
 
 // Exporta as funções para uso em outros arquivos
-export { fetchAllProtocols, fetchProtocolByEmailOperator, fetchProtocolById, fetchProtocolByCode, fetchProtocolsByType };
+export {
+  fetchAllProtocols,
+  fetchProtocolByEmailOperator,
+  fetchProtocolById,
+  fetchProtocolByCode,
+  fetchProtocolsByType,
+  updateProtocolStatus,
+};

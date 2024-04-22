@@ -1,21 +1,33 @@
+// Login.js
+
 import React, { useState } from 'react';
-import { Button, Card, CardHeader, CardBody, FormGroup, Form, Input, InputGroupAddon, InputGroupText, InputGroup, Row, Col, Alert } from 'reactstrap';
-import { Navigate } from 'react-router-dom';
-import { login } from '../../services/authentication.js';
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  Row,
+  Col,
+  Alert,
+} from 'reactstrap';
+import { login } from 'services/authentication.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
-import UserModel from '../../services/UserModel.js';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false); // Adicione o estado para controlar o estado de login
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
-    // Verificar se os campos de email e senha estão preenchidos
     if (!email || !password) {
       setError('Por favor, preencha todos os campos.');
       return;
@@ -23,45 +35,24 @@ const Login = () => {
 
     try {
       setLoading(true);
-  
-     
-  
-      // Fazer o login e obter os dados do usuário
-      const { accessToken, userId, role } = await login(email, password);
+      const { role } = await login(email, password);
 
-  
-      // Criar uma instância do UserModel com o token e o ID de usuário
-      const userModel = new UserModel(accessToken, userId);
-  
-      // Armazenar o modelo de usuário no localStorage
-      localStorage.setItem('userModel', JSON.stringify(userModel));
-      localStorage.setItem('userRole', role);
-
-  
-      // Atualiza o estado de login para true
-      setLoggedIn(true);
+      switch (role) {
+        case 'ADMIN':
+          window.location.href = '/admin/protocolos';
+          break;
+        default:
+          window.location.href = '/index';
+      }
     } catch (error) {
       console.error('Erro durante a autenticação:', error.message);
-      setError('Credenciais inválidas. Por favor, verifique seu email e senha.');
+      setError(
+        'Credenciais inválidas. Por favor, verifique seu email e senha.'
+      );
     } finally {
       setLoading(false);
     }
   };
-
-  // Se o usuário estiver logado, redirecione-o para a rota adequada
-  if (loggedIn) {
-    const userRole = localStorage.getItem('userRole');
-    switch (userRole) {
-      case 'ADMIN':
-        return <Navigate to="/admin/protocolos" />;
-      case 'ATENDENTE':
-        return <Navigate to="/admin/ticket-service" />;
-      case 'FISCAL':
-        return <Navigate to="/admin/fiscalizacao" />;
-      default:
-        return <Navigate to="/index" />;
-    }
-  }
 
   return (
     <Col lg="5" md="7">
@@ -101,7 +92,7 @@ const Login = () => {
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input
-                  placeholder="Password"
+                  placeholder="Senha"
                   type="password"
                   autoComplete="new-password"
                   value={password}

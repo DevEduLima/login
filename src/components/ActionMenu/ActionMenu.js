@@ -1,59 +1,50 @@
-// ActionMenu.js
 import React, { useState } from 'react';
-import IconButton from '@mui/material/IconButton'; // Importa o componente IconButton do Material-UI
-import MoreVertIcon from '@mui/icons-material/MoreVert'; // Importa o ícone de menu vertical do Material-UI
-import Menu from '@mui/material/Menu'; // Importa o componente Menu do Material-UI
-import MenuItem from '@mui/material/MenuItem'; // Importa o componente MenuItem do Material-UI
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
-// Componente ActionMenu
 const ActionMenu = ({
-  onMenuClick, // Função de callback para o evento de clique no menu
-  onMenuClose, // Função de callback para o evento de fechamento do menu
-  onMenuItemClick, // Função de callback para o evento de clique em um item do menu
-  menuOptions, // Opções do menu, cada uma contendo um rótulo e uma ação
-  userId, // Adicione userId como uma prop
+  onMenuClick,
+  onMenuClose,
+  onMenuItemClick,
+  menuOptions,
+  protocolId,
 }) => {
-  const [anchorEl, setAnchorEl] = useState(null); // Estado para controlar o elemento âncora do menu
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  // Manipulador de evento para clique no botão
   const handleButtonClick = (event) => {
-    setAnchorEl(event.currentTarget); // Define o elemento âncora como o elemento clicado
-    onMenuClick(event); // Chama a função de callback para o evento de clique no menu
+    setAnchorEl(event.currentTarget);
+    onMenuClick(event);
   };
 
-  // Manipulador de evento para fechamento do menu
   const handleMenuClose = () => {
-    setAnchorEl(null); // Remove o elemento âncora, fechando o onMenuItemClick 
-    onMenuClose(); // Chama a função de callback para o evento de fechamento do menu
+    setAnchorEl(null);
+    onMenuClose();
   };
 
-  // Manipulador de evento para clique em um item do menu
   const handleMenuItemClick = (menuItemAction) => {
-    onMenuItemClick(menuItemAction, userId); // Chama a função de callback com a ação do item do menu
-    handleMenuClose(); // Fecha o menu após clicar em um item
+    // Chama a função de callback com a ação do item do menu e o ID do protocolo
+    onMenuItemClick(menuItemAction, protocolId,);
+    handleMenuClose();
   };
-
 
   return (
     <>
-      {/* Botão de ação */}
       <IconButton onClick={handleButtonClick}>
-        <MoreVertIcon /> {/* Ícone de menu vertical */}
+        <MoreVertIcon />
       </IconButton>
-      {/* Menu de opções */}
       <Menu
-        anchorEl={anchorEl} // Define o elemento âncora do menu
-        open={Boolean(anchorEl)} // Define se o menu está aberto baseado no estado do elemento âncora
-        onClose={handleMenuClose} // Função de callback para fechamento do menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
       >
-        {/* Mapeia as opções do menu e renderiza cada uma como um MenuItem */}
         {menuOptions.map((option, index) => (
           <MenuItem
-          key={option.action} // Chave única para o item do menu
-          onClick={() => handleMenuItemClick(option.action)} // Manipulador de evento para clique no item do menu
-          // onMenuItemClick={onMenuItemClick} // Passa a função onMenuItemClick para o MenuItem
-        >
-          {option.label} {/* Rótulo do item do menu */}
+            key={option.action}
+            onClick={() => handleMenuItemClick(option.action)}
+          >
+            {option.label}
           </MenuItem>
         ))}
       </Menu>
@@ -61,4 +52,4 @@ const ActionMenu = ({
   );
 };
 
-export default ActionMenu; // Exporta o componente ActionMenu
+export default ActionMenu;
