@@ -56,7 +56,7 @@ const AssistentTicket = () => {
 
   // Função para lidar com o clique nos itens do menu de ação
   const handleMenuItemClick = async (action, protocolId) => {
-    console.log('Protocol ID:', protocolId);
+   
     try {
       let newStatus = '';
       if (action === 'open') {
@@ -66,7 +66,7 @@ const AssistentTicket = () => {
       }
       if (newStatus !== '') {
         await updateProtocolStatus(protocolId, newStatus);
-        console.log('Status atualizado com sucesso!');
+       
         // Define a mensagem de alerta
         setAlertMessage('Status atualizado com sucesso!');
         // Refetch dos protocolos após a alteração do status

@@ -134,9 +134,9 @@ const fetchProtocolsByType = async (protocolType) => {
 // Função para atualizar o status do protocolo
 const updateProtocolStatus = async (protocolId, newStatus) => {
   try {
-    console.log('Protocol ID:', protocolId); // Verifica o valor de protocolId
+
     const token = getToken(); // Certifique-se de definir corretamente a função getToken() para obter o token de autorização
-    console.log('Token:', token); // Verifica o valor do token
+   
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ const updateProtocolStatus = async (protocolId, newStatus) => {
       protocol_status: newStatus,
     }, { headers });
 
-    console.log('Resposta da atualização de status:', response);
+    
     return response.data;
   } catch (error) {
     console.error('Erro ao atualizar status do protocolo:', error);

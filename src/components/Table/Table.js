@@ -36,7 +36,6 @@ const Table = ({
 
   // Função para lidar com o clique no menu de ação
   const handleMenuClick = (event, rowData) => {
-    console.log('Protocol ID:', rowData.id); // Adicione este console.log para verificar o valor de row.original.id
     setAnchorEl(event.currentTarget);
     setSelectedItem(rowData);
   };
