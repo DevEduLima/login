@@ -27,6 +27,7 @@ const AssistentTicket = () => {
   // Define a ordem das colunas na tabela
   const columnOrder = [
     'protocolo',
+    'status',
     'setor',
     'nome',
     'email',

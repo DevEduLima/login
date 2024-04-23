@@ -88,7 +88,7 @@ const Table = ({
         accessorKey: 'acao',
         header: 'Ação',
         grow: false,
-        size: 50,
+        size: 40,
         Cell: ({ row }) => (
           <ActionMenu
             onMenuClick={(event) => handleMenuClick(event, row.original)}
@@ -96,7 +96,6 @@ const Table = ({
             onMenuItemClick={onMenuItemClick}
             menuOptions={customActionMenuOptions || actionMenuOptions}
             protocolId={row.original.id}
-
           />
         ),
         show: !visibleColumns || visibleColumns.includes('acao'),

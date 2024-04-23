@@ -5,9 +5,7 @@ import Table from 'components/Table/Table.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
 import TableColumns from 'components/Table/tableColumns.js';
 import ProtocolCounter from 'components/ProtocolCounter/ProtocolCounter.js';
-import {
-  fetchAllProtocols,
-} from 'services/ProtocolRequests.js';
+import { fetchAllProtocols } from 'services/ProtocolRequests.js';
 
 const customActionMenuOptions = [
   { action: 'status', label: 'Alterar Status do Protocolo' },
@@ -17,9 +15,16 @@ const Protocols = () => {
   // Estado para armazenar os protocolos, estado de carregamento e o total de protocolos
   const [protocols, setProtocols] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [totalProtocols, setTotalProtocols] = useState('');
+  const [totalProtocols, setTotalProtocols] = useState();
 
+  // Definir a ordem das colunas na tabela
+  const columnOrder = ['protocolo', 'status', 'nome', 'email', 'data', 'acao'];
+
+  // Configurar as colunas da tabela
+
+  const columnsConfig = TableColumns(false, columnOrder);
   // Função para buscar os protocolos
+
   const fetchProtocols = async () => {
     try {
       // Busca todos os protocolos
@@ -37,18 +42,6 @@ const Protocols = () => {
   useEffect(() => {
     fetchProtocols();
   }, []);
-
-  // Definir a ordem das colunas na tabela
-  const columnOrder = [
-    'protocolo',
-    'setor',
-    'nome',
-    'email',
-    'data',
-    'acao',
-  ];
-  // Configurar as colunas da tabela
-  const columnsConfig = TableColumns(false, columnOrder);
 
   // Renderizar o componente de TicketTI
   return (
@@ -70,7 +63,7 @@ const Protocols = () => {
               // Renderiza a tabela com os protocolos, passando os dados e configurações necessários
               <Table
                 tableData={protocols.map((protocol) => ({
-                  protocolo: protocol.cod_protocolo, //exibi o codigo do protocolo na tabela
+                  protocolo: protocol.cod_protocolo,
                   setor: protocol.setor,
                   status: protocol.protocol_status,
                   atendimento: protocol.type_atendimento,

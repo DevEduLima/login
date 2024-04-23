@@ -7,7 +7,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'id', // Chave de acesso aos dados do usuário
     header: 'Id', // Texto do cabeçalho da coluna
     grow: false, // Indica se a coluna pode expandir
-    size: 100, // Tamanho da coluna
+    size: 40, // Tamanho da coluna
     show: showSpecialColumns, // Indica se a coluna deve ser exibida
     muiTableHeadCellProps: {
       align: 'center', // Propriedades da célula do cabeçalho da coluna
@@ -31,12 +31,26 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
       align: 'center',
     },
   },
+  status: {
+    accessorKey: 'status',
+    header: 'Status',
+    grow: false,
+    size: 40,
+    align: 'center',
+    show: visibleColumns.includes('status'), // Verifica se a coluna está incluída nas colunas visíveis
+    muiTableHeadCellProps: {
+      align: 'center',
+    },
+    muiTableBodyCellProps: {
+      align: 'center',
+    },
+  },
   // Definição da coluna de nome
   nome: {
     accessorKey: 'nome',
     header: 'Nome',
-    grow: false,
-    size: 150,
+    grow: true,
+    size: 180,
     // Verifica se deve exibir a coluna especial ou se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show:
       showSpecialColumns ||
@@ -73,7 +87,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'numero',
     header: 'Número',
     grow: false,
-    size: 50,
+    size: 40,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('numero'),
@@ -89,7 +103,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'data',
     header: 'Data',
     grow: false,
-    size: 50,
+    size: 40,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('data'),

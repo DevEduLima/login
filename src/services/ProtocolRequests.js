@@ -20,8 +20,7 @@ const fetchAllProtocols = async () => {
     };
 
     // Faz a requisição GET para obter todos os protocolos
-    const response = await axios.get(`${API_URL}/protocols/`, { headers });
-
+    const response = await axios.get(`${API_URL}/protocols/?limit=1000`, { headers });
     return response.data;
   } catch (error) {
     // Em caso de erro, exibe uma mensagem de erro no console e lança o erro novamente
