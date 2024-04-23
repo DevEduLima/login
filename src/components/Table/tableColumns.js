@@ -35,7 +35,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'status',
     header: 'Status',
     grow: false,
-    size: 40,
+    size: 50,
     align: 'center',
     show: visibleColumns.includes('status'), // Verifica se a coluna está incluída nas colunas visíveis
     muiTableHeadCellProps: {
@@ -50,7 +50,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'nome',
     header: 'Nome',
     grow: true,
-    size: 180,
+    size: 300,
     // Verifica se deve exibir a coluna especial ou se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show:
       showSpecialColumns ||
@@ -116,7 +116,6 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
   },
 
   // Adicione mais definições de colunas conforme necessário
-
 });
 
 export default TableColumns;
