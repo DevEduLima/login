@@ -5,7 +5,7 @@ services:
     networks:
       - crtba_rede
     ports:
-      - target: 3000
+      - target: 80
         published: 8009
         protocol: tcp
     deploy:
