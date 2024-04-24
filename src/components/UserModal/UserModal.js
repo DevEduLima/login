@@ -30,8 +30,8 @@ const UserModal = ({
   // Função para lidar com a validação do formulário
   const validateForm = () => {
     // Verifica se todos os campos obrigatórios estão preenchidos
-    if (name && email && role) {
-      setFormValid(true); // Define o formulário como válido se todos os campos obrigatórios estiverem preenchidos
+    if ((!isEditMode || password) && name && email && role) {
+            setFormValid(true); // Define o formulário como válido se todos os campos obrigatórios estiverem preenchidos
     } else {
       setFormValid(false); // Define o formulário como inválido se algum campo obrigatório estiver vazio
     }
@@ -121,6 +121,7 @@ const UserModal = ({
               <Input
                 type="password"
                 id="password"
+                autoComplete="new-password"
                 value={password || ''}
                 onChange={handleInputChanged} // Alterado para chamar handleInputChanged
               />

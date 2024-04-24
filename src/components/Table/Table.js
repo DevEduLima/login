@@ -135,11 +135,7 @@ const Table = ({
         cursor: 'pointer',
       },
     }),
-    muiTableCellProps: {
-      sx: {
-        backgroundColor: '#fff',
-      },
-    },
+
   });
 
   // Atualiza o estado da página atual sempre que os protocolos forem recarregados
