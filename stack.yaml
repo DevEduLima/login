@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  smartprotocolsweb:
+    image:  israelmarcos/smartprotocolsweb:1.0.0
+    networks:
+      - crtba_rede
+    ports:
+      - target: 3000
+        published: 8009
+        protocol: tcp
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+          
+      restart_policy:
+        condition: on-failure
+        
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.smartprotocolsweb.rule=Host(`smartprotocolsweb.intgov.com.br`)
+        - traefik.http.routers.smartprotocolsweb.entrypoints=websecure
+        - traefik.http.routers.smartprotocolsweb.tls.certresolver=letsencryptresolver
+        - traefik.http.services.smartprotocolsweb.loadbalancer.server.port=8009
+        - traefik.http.services.smartprotocolsweb.loadbalancer.passHostHeader=true
+        - traefik.http.routers.smartprotocolsweb.service=smartprotocolsweb
+      
+networks:
+  crtba_rede:
+    external: true
+    name: crtba_rede
