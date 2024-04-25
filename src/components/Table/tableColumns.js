@@ -9,19 +9,14 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     grow: false, // Indica se a coluna pode expandir
     size: 40, // Tamanho da coluna
     show: showSpecialColumns, // Indica se a coluna deve ser exibida
-    muiTableHeadCellProps: {
-      align: 'center', // Propriedades da célula do cabeçalho da coluna
-    },
-    muiTableBodyCellProps: {
-      align: 'center', // Propriedades da célula do corpo da coluna
-    },
+
   },
   // Definição da coluna de protocolo
   protocolo: {
     accessorKey: 'protocolo',
     header: 'Protocolo',
     grow: false,
-    size: 40,
+    size: 50,
     align: 'center',
     show: visibleColumns.includes('protocolo'), // Verifica se a coluna está incluída nas colunas visíveis
     muiTableHeadCellProps: {
@@ -35,7 +30,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'status',
     header: 'Status',
     grow: false,
-    size: 50,
+    size: 40,
     align: 'center',
     show: visibleColumns.includes('status'), // Verifica se a coluna está incluída nas colunas visíveis
     muiTableHeadCellProps: {
@@ -50,7 +45,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'nome',
     header: 'Nome',
     grow: true,
-    size: 300,
+    size: 250,
     // Verifica se deve exibir a coluna especial ou se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show:
       showSpecialColumns ||
@@ -68,7 +63,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'email',
     header: 'Email',
     grow: false,
-    size: 100,
+    size: 150,
     align: 'center',
     // Verifica se deve exibir a coluna especial ou se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show:
@@ -107,6 +102,21 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('data'),
+    muiTableHeadCellProps: {
+      align: 'center',
+    },
+    muiTableBodyCellProps: {
+      align: 'center',
+    },
+  },
+  atendente: {
+    accessorKey: 'email_operador', // Alterado para 'email_operador'
+    header: 'Atendente',
+    grow: true,
+    size: 150,
+    align: 'center',
+    // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
+    show: !visibleColumns.length || visibleColumns.includes('atendente'),
     muiTableHeadCellProps: {
       align: 'center',
     },

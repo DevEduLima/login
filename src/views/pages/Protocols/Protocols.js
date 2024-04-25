@@ -18,7 +18,15 @@ const Protocols = () => {
   const [totalProtocols, setTotalProtocols] = useState();
 
   // Definir a ordem das colunas na tabela
-  const columnOrder = ['protocolo', 'status', 'nome', 'email', 'data', 'acao'];
+  const columnOrder = [
+    'protocolo',
+    'status',
+    'nome',
+    'email',
+    'data',
+    'acao',
+    'atendente',
+  ];
 
   // Configurar as colunas da tabela
 

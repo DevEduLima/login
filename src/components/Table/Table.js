@@ -13,7 +13,8 @@ const Table = ({
   enableRowClick = true,
   customActionMenuOptions,
   actionMenuOptions,
-  onMenuItemClick
+  onMenuItemClick,
+  columnFilterDisplayMode= "popover",
 }) => {
   // Estado para controlar a abertura do diálogo de detalhes do protocolo
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -169,8 +170,8 @@ const Table = ({
             Próxima Página
           </Button>
         </div>
-        <div className="rows-per-page-control align-items-center mt-2">
-          <span className="mr-1">Linhas por Página:</span>
+        <div className="rows-per-page-control align-items-center">
+          <span className="pr-1 text-center">Linhas por Página:</span>
           <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
             <option value={5}>5</option>
             <option value={10}>10</option>

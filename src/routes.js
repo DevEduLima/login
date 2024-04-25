@@ -9,6 +9,8 @@ import Protocols from 'views/pages/Protocols/Protocols';
 import UserControl from 'views/pages/UserControl/UserControl';
 import Login from 'views/Login/Login.js';
 import AssistentTicket from 'views/pages/Assistent/AssistentTicket';
+import Supervisor from 'views/pages/Supervisor/Supervisor';
+
 
 // Função para verificar se o usuário está autenticado
 const usuarioAutenticado = () => {
@@ -38,7 +40,20 @@ const routes = [
       <Navigate to="/auth/login" />
     ),
     layout: '/admin',
-    role: ['ATENDENTE','SUPERVISOR'], // Role necessária para acessar esta rota
+    role: ['ATENDENTE'], // Role necessária para acessar esta rota
+  },
+  {
+    path: '/supervisor',
+    name: 'Supervisor',
+    icon: 'ni ni-chat-round text-orange',
+    // Renderiza a página de atendimento se o usuário estiver autenticado e possuir a função de atendente, caso contrário, redireciona para a página de login
+    component: usuarioAutenticado() ? (
+      <Supervisor />
+    ) : (
+      <Navigate to="/auth/login" />
+    ),
+    layout: '/admin',
+    role: ['SUPERVISOR'], // Role necessária para acessar esta rota
   },
   {
     path: '/inspection-ticket',

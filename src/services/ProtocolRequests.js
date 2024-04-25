@@ -42,7 +42,7 @@ const fetchProtocolByEmailOperator = async (emailOperator) => {
 
     // Faz a requisição GET para obter os protocolos pelo email do operador
     const response = await axios.get(
-      `${API_URL}/protocols/email_operador/${emailOperator}/`,
+      `${API_URL}/protocols/email_operador/${emailOperator}`,
       { headers }
     );
 

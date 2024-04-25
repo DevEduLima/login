@@ -5,9 +5,8 @@ import Table from 'components/Table/Table.js';
 import TableColumns from 'components/Table/tableColumns.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
 import ProtocolCounter from 'components/ProtocolCounter/ProtocolCounter.js';
-
 import {
-  fetchProtocolByEmailOperator,
+  fetchAllProtocols,
   updateProtocolStatus,
 } from 'services/ProtocolRequests.js';
 
@@ -16,60 +15,32 @@ const customActionMenuOptions = [
   { action: 'close', label: 'Fechar Protocolo' },
 ];
 
-// Componente TicketService
-const TicketService = () => {
-  // Estados para os dados dos protocolos
+const Supervisor = () => {
   const [protocols, setProtocols] = useState([]);
-
-  // Estado para indicar se os protocolos estão sendo carregados
   const [loading, setLoading] = useState(true);
-
-  // Estado para o total de protocolos
   const [totalProtocols, setTotalProtocols] = useState(0);
-
-  // Estado para a mensagem de alerta
   const [alertMessage, setAlertMessage] = useState('');
-
-  // Estado para controlar a página atual da paginação
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Define a ordem das colunas da tabela
-  const columnOrder = ['protocolo', 'status', 'nome', 'email', 'data', 'acao'];
-
-  // Configuração das colunas da tabela
+  const columnOrder = ['protocolo', 'status', 'nome', 'email', 'data','atendente', 'acao'];
   const columnsConfig = TableColumns(false, columnOrder);
 
-  // Efeito para buscar os protocolos ao montar o componente
   const fetchProtocolsData = async () => {
     try {
-      // Obtém o email do operador do armazenamento local
-      const emailOperator = localStorage.getItem('userEmail');
-      // Verifica se o email do operador existe
-      if (!emailOperator) {
-        throw new Error(
-          'Email do operador não encontrado no armazenamento local.'
-        );
-      }
-      // Faça a chamada para a função fetchProtocolByEmailOperator
-      const protocolsData = await fetchProtocolByEmailOperator(emailOperator);
-      // Atualize o estado dos protocolos com os dados recebidos
+      const protocolsData = await fetchAllProtocols();
       setProtocols(protocolsData);
-      // Atualize o estado do total de protocolos
       setTotalProtocols(protocolsData.length);
-      // Marque o carregamento como concluído
       setLoading(false);
     } catch (error) {
-      // Em caso de erro, exiba uma mensagem de erro no console e marque o carregamento como concluído
-      console.error('Erro ao buscar dados:', error);
+      console.error('Erro ao buscar protocolos:', error);
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchProtocolsData();
   }, []);
 
-  // Função para lidar com o clique nos itens do menu de ação
   const handleMenuItemClick = async (action, protocolId) => {
     try {
       let newStatus = '';
@@ -80,14 +51,9 @@ const TicketService = () => {
       }
       if (newStatus !== '') {
         await updateProtocolStatus(protocolId, newStatus);
-
-        // Define a mensagem de alerta
         setAlertMessage('Status atualizado com sucesso!');
-        // Refetch dos protocolos após a alteração do status
         await fetchProtocolsData();
-        // Atualiza a página atual da paginação para 1
         setCurrentPage(1);
-        // Define um timeout para limpar a mensagem de alerta após 5 segundos
         setTimeout(() => {
           setAlertMessage('');
         }, 5000);
@@ -99,22 +65,16 @@ const TicketService = () => {
 
   return (
     <>
-      <Header /> {/* Renderiza o cabeçalho */}
+      <Header />
       <Container className="mt--7" fluid>
-        {/* Container fluido para envolver os elementos */}
-        <Card className="shadow">
-          {/* Cartão com sombra */}
+        <Card className="shadow-lg">
           <CardHeader>
-            {/* Cabeçalho do cartão */}
             <div className="d-flex justify-content-between p-2 mb-3">
-              {/* Div para alinhar os itens horizontalmente */}
               <h3 className="d-flex align-items-center text-uppercase text-primary">
-                {/* Título */}
                 Contagem de Protocolos
               </h3>
               <ProtocolCounter totalProtocols={totalProtocols} />
             </div>
-            {/* Renderiza a mensagem de alerta se houver */}
             {alertMessage && (
               <div
                 className="alert alert-success alert-dismissible fade show text-center"
@@ -123,10 +83,10 @@ const TicketService = () => {
                 {alertMessage}
               </div>
             )}
-            {loading ? ( // Condição para verificar se a página está carregando
-              <LoadingIndicator /> // Se estiver carregando, exibe o indicador de carregamento
+            {loading ? (
+              <LoadingIndicator />
             ) : (
-              <Table // Tabela para exibir os protocolos
+              <Table
                 tableData={protocols.map((protocol) => ({
                   protocolo: protocol.cod_protocolo,
                   setor: protocol.setor,
@@ -155,7 +115,7 @@ const TicketService = () => {
                 columnsConfig={columnsConfig}
                 actionMenuOptions={customActionMenuOptions}
                 onMenuItemClick={handleMenuItemClick}
-                currentPage={currentPage} // Passa o estado da página atual da paginação
+                currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
               />
             )}
@@ -166,4 +126,4 @@ const TicketService = () => {
   );
 };
 
-export default TicketService; // Exporta o componente TicketService
+export default Supervisor;
