@@ -22,5 +22,8 @@ FROM nginx:alpine
 # Copie os arquivos estáticos gerados para a pasta de arquivos estáticos do nginx
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
 
+# Copie o arquivo de configuração personalizado para o contêiner
+COPY nginx.conf /etc/nginx/nginx.conf
+
 # Exponha a porta 80
 EXPOSE 80
