@@ -25,25 +25,21 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!email || !password) {
       setError('Por favor, preencha todos os campos.');
       return;
     }
-
+  
     try {
       setLoading(true);
-      const { role } = await login(email, password);
-
-      switch (role) {
-        case 'ADMIN':
-          window.location.href = '/admin/protocolos';
-          break;
-        default:
-          window.location.href = '/index';
-      }
+      await login(email, password); // Supondo que a função login retorne uma Promise
+  
+      // Redirecionar para a página inicial ('/index') após o login bem-sucedido
+      window.location.href = '/index';
     } catch (error) {
       console.error('Erro durante a autenticação:', error.message);
       setError(
