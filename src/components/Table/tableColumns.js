@@ -113,7 +113,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'email_operador', // Alterado para 'email_operador'
     header: 'Atendente',
     grow: true,
-    size: 150,
+    size: 300,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('atendente'),
