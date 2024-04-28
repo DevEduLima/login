@@ -1,5 +1,3 @@
-// Login.js
-
 import React, { useState } from 'react';
 import {
   Button,
@@ -16,30 +14,32 @@ import {
   Col,
   Alert,
 } from 'reactstrap';
+import { useNavigate } from 'react-router-dom'; 
 import { login } from 'services/authentication.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
 
 const Login = () => {
+  const navigate = useNavigate(); // Utiliza o hook useNavigate para obter a função de navegação
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!email || !password) {
       setError('Por favor, preencha todos os campos.');
       return;
     }
-  
+
     try {
       setLoading(true);
       await login(email, password); // Supondo que a função login retorne uma Promise
-  
-      // Redirecionar para a página inicial ('/index') após o login bem-sucedido
-      window.location.href = '/index';
+
+      // Redireciona para a página inicial ('/index') após o login bem-sucedido
+      navigate('/index');
     } catch (error) {
       console.error('Erro durante a autenticação:', error.message);
       setError(
