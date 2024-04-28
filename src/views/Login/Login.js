@@ -39,7 +39,7 @@ const Login = () => {
       await login(email, password); // Supondo que a função login retorne uma Promise
   
       // Redirecionar para a página inicial ('/index') após o login bem-sucedido
-      window.location.href = '/index';
+      window.location.href = '/admin/index';
     } catch (error) {
       console.error('Erro durante a autenticação:', error.message);
       setError(
