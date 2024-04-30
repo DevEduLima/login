@@ -2,6 +2,7 @@
 
 // Esta função retorna um objeto contendo definições de colunas para uma tabela, com opções para mostrar colunas especiais
 const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
+  
   // Definição da coluna de ID do usuário
   user: {
     accessorKey: 'id', // Chave de acesso aos dados do usuário
@@ -16,7 +17,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'protocolo',
     header: 'Protocolo',
     grow: false,
-    size: 50,
+    size: 30,
     align: 'center',
     show: visibleColumns.includes('protocolo'), // Verifica se a coluna está incluída nas colunas visíveis
     muiTableHeadCellProps: {
@@ -30,7 +31,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'status',
     header: 'Status',
     grow: false,
-    size: 40,
+    size: 30,
     align: 'center',
     show: visibleColumns.includes('status'), // Verifica se a coluna está incluída nas colunas visíveis
     muiTableHeadCellProps: {
@@ -98,12 +99,13 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'data',
     header: 'Data',
     grow: false,
-    size: 40,
+    size: 30,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('data'),
     muiTableHeadCellProps: {
       align: 'center',
+      
     },
     muiTableBodyCellProps: {
       align: 'center',
@@ -113,7 +115,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'email_operador', // Alterado para 'email_operador'
     header: 'Atendente',
     grow: true,
-    size: 300,
+    size: 250,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('atendente'),

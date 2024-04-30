@@ -89,7 +89,7 @@ const Table = ({
         accessorKey: 'acao',
         header: 'Ação',
         grow: false,
-        size: 40,
+        size: 30,
         Cell: ({ row }) => (
           <ActionMenu
             onMenuClick={(event) => handleMenuClick(event, row.original)}

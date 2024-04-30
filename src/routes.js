@@ -5,12 +5,11 @@ import { Navigate } from 'react-router-dom';
 import Index from 'views/Index.js';
 import TicketService from 'views/pages/TicketService/TicketService';
 import InspectionTicket from 'views/pages/InspectionTicket/InspectionTicket';
-import Protocols from 'views/pages/Protocols/Protocols'; 
+import Protocols from 'views/pages/Protocols/Protocols';
 import UserControl from 'views/pages/UserControl/UserControl';
 import Login from 'views/Login/Login.js';
 import AssistentTicket from 'views/pages/Assistent/AssistentTicket';
 import Supervisor from 'views/pages/Supervisor/Supervisor';
-
 
 // Função para verificar se o usuário está autenticado
 const usuarioAutenticado = () => {
@@ -29,9 +28,10 @@ const routes = [
     component: usuarioAutenticado() ? <Index /> : <Navigate to="/auth/login" />,
     layout: '/admin',
   },
+  
   {
     path: '/ticket-service',
-    name: 'Atendimento',
+    name: 'Protocolos',
     icon: 'ni ni-chat-round text-orange',
     // Renderiza a página de atendimento se o usuário estiver autenticado e possuir a função de atendente, caso contrário, redireciona para a página de login
     component: usuarioAutenticado() ? (
@@ -42,9 +42,10 @@ const routes = [
     layout: '/admin',
     role: ['ATENDENTE'], // Role necessária para acessar esta rota
   },
+
   {
     path: '/supervisor',
-    name: 'Supervisor',
+    name: 'Protocolos',
     icon: 'ni ni-chat-round text-orange',
     // Renderiza a página de atendimento se o usuário estiver autenticado e possuir a função de atendente, caso contrário, redireciona para a página de login
     component: usuarioAutenticado() ? (
@@ -57,7 +58,7 @@ const routes = [
   },
   {
     path: '/inspection-ticket',
-    name: 'Fiscalização',
+    name: 'Protocolos',
     icon: 'ni ni-chat-round text-yellow',
     // Renderiza a página de fiscalização se o usuário estiver autenticado e possuir a função de fiscal, caso contrário, redireciona para a página de login
     component: usuarioAutenticado() ? (
@@ -71,7 +72,7 @@ const routes = [
   {
     path: '/assistente',
     name: 'Assistente',
-    icon: 'ni ni-laptop text-blue',
+    icon: 'ni ni-atom text-blue',
     // Renderiza o componente AssistentTicket se o usuário estiver autenticado, caso contrário, redireciona para a página de login
     component: usuarioAutenticado() ? (
       <AssistentTicket />
@@ -84,7 +85,7 @@ const routes = [
   {
     path: '/protocolos',
     name: 'Protocolos',
-    icon: 'ni ni-laptop text-blue',
+    icon: 'ni ni-collection text-blue',
     // Renderiza a página de TI se o usuário estiver autenticado e possuir a função de administrador, caso contrário, redireciona para a página de login
     component: usuarioAutenticado() ? (
       <Protocols />
