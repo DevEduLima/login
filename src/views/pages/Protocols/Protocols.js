@@ -5,17 +5,31 @@ import Table from 'components/Table/Table.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
 import TableColumns from 'components/Table/tableColumns.js';
 import ProtocolCounter from 'components/ProtocolCounter/ProtocolCounter.js';
-import { fetchAllProtocols } from 'services/ProtocolRequests.js';
+import {
+  fetchAllProtocols,
+  updateProtocolStatus,
+} from 'services/ProtocolRequests.js';
 
 const customActionMenuOptions = [
-  { action: 'status', label: 'Alterar Status do Protocolo' },
+  { action: 'open', label: 'Abrir Protocolo' },
+  { action: 'close', label: 'Fechar Protocolo' },
 ];
 
 const Protocols = () => {
-  // Estado para armazenar os protocolos, estado de carregamento e o total de protocolos
+  // Estados para os dados dos protocolos
   const [protocols, setProtocols] = useState([]);
+
+  // Estado para indicar se os protocolos estão sendo carregados
   const [loading, setLoading] = useState(true);
-  const [totalProtocols, setTotalProtocols] = useState();
+
+  // Estado para o total de protocolos
+  const [totalProtocols, setTotalProtocols] = useState(0);
+
+  // Estado para a mensagem de alerta
+  const [alertMessage, setAlertMessage] = useState('');
+
+  // Estado para controlar a página atual da paginação
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Definir a ordem das colunas na tabela
   const columnOrder = [
@@ -33,23 +47,72 @@ const Protocols = () => {
   const columnsConfig = TableColumns(false, columnOrder);
   // Função para buscar os protocolos
 
-  const fetchProtocols = async () => {
+  // Efeito para buscar os protocolos ao montar o componente
+  const fetchProtocolsData = async () => {
     try {
-      // Busca todos os protocolos
       const protocolsData = await fetchAllProtocols();
       setProtocols(protocolsData);
-      setTotalProtocols(protocolsData.length); // Atualiza o total de protocolos
-      setLoading(false); // Indica que o carregamento foi concluído
-    } catch (error) {
-      console.error('Erro ao buscar protocolos:', error);
+      setTotalProtocols(protocolsData.length);
       setLoading(false);
+      // Extrai a mensagem da resposta da requisição
+      const message = protocolsData.message; // Supondo que a mensagem esteja na propriedade 'message'
+      setAlertMessage(message); // Define a mensagem de alerta com base na resposta
+    } catch (error) {
+      console.error('Erro ao buscar dados:', error);
+      setLoading(false);
+      setAlertMessage(
+        'Erro ao buscar dados dos protocolos. Por favor, tente novamente mais tarde.'
+      );
     }
   };
 
-  // Efeito para buscar os protocolos ao montar o componente
+  // Efeito para carregar os protocolos ao montar o componente
   useEffect(() => {
-    fetchProtocols();
+    fetchProtocolsData();
   }, []);
+
+  // Função para lidar com o clique nos itens do menu de ação
+  const handleMenuItemClick = async (action, protocolId) => {
+    try {
+      let newStatus = '';
+      const operatorEmail = localStorage.getItem('userEmail');
+      if (action === 'open') {
+        newStatus = 'Aberto';
+      } else if (action === 'close') {
+        newStatus = 'Fechado';
+      }
+      if (newStatus !== '') {
+        const updatedProtocol = await updateProtocolStatus(
+          protocolId,
+          newStatus,
+          operatorEmail
+        );
+
+        // Define a mensagem de alerta
+        setAlertMessage(
+          'Status atualizado com sucesso: ' + updatedProtocol.protocol_status
+        );
+
+        // Atualiza a página atual da paginação para 1
+        setCurrentPage(1);
+
+        // Define um timeout para limpar a mensagem de alerta após 5 segundos
+        setTimeout(() => {
+          setAlertMessage('');
+        }, 5000);
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar o status:', error);
+      // Define a mensagem de erro
+      setAlertMessage('Erro: ' + error.message);
+      setTimeout(() => {
+        setAlertMessage('');
+      }, 5000);
+    } finally {
+      // Refetch dos protocolos após a tentativa de atualização do status, mesmo se não for bem-sucedida
+      await fetchProtocolsData();
+    }
+  };
 
   // Renderizar o componente de TicketTI
   return (
@@ -65,6 +128,16 @@ const Protocols = () => {
               <ProtocolCounter totalProtocols={totalProtocols} />
               {/* Aqui é onde você insere o contador de protocolos */}
             </div>
+            {/* Renderiza a mensagem de alerta se houver */}
+            {alertMessage && (
+              <div
+                className="alert alert-success alert-dismissible fade show text-center"
+                role="alert"
+              >
+                {alertMessage}
+              </div>
+            )}
+
             {loading ? (
               <LoadingIndicator />
             ) : (
@@ -89,12 +162,17 @@ const Protocols = () => {
                   id_user: protocol.id_operador,
                   email_operador: protocol.email_operador,
                   cod_protocolo: protocol.cod_protocolo,
+                  id: protocol.id,
                   acao: 'Ação',
                 }))}
-                includeActionColumn={false}
+                includeActionColumn={true}
+                enableRowClick={true}
                 visibleColumns={columnOrder}
                 columnsConfig={columnsConfig}
                 actionMenuOptions={customActionMenuOptions}
+                onMenuItemClick={handleMenuItemClick}
+                currentPage={currentPage} // Passa o estado da página atual da paginação
+                setCurrentPage={setCurrentPage}
               />
             )}
           </CardHeader>

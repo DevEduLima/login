@@ -10,7 +10,6 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
   Col,
   Alert,
 } from 'reactstrap';
@@ -69,7 +68,7 @@ const Login = () => {
       <Card className="bg-secondary shadow border-0">
         <CardHeader className="bg-transparent pb-4">
           <div className="text-muted text-center mt-3">
-            <img alt="..." src={require('../../assets/img/logoCrt.png')} />
+            <img alt="logo crtba" src={require('assets/img/logoCrt.png')} />
           </div>
         </CardHeader>
         <CardBody className="px-lg-5 py-lg-3">
@@ -124,7 +123,6 @@ const Login = () => {
           </Form>
         </CardBody>
       </Card>
-      <Row className="mt-3">{/* esqueceu a senha  */}</Row> {/* Link para recuperação de senha */}
     </Col>
   );
 };

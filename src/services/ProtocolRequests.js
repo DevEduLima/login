@@ -20,7 +20,9 @@ const fetchAllProtocols = async () => {
     };
 
     // Faz a requisição GET para obter todos os protocolos
-    const response = await axios.get(`${API_URL}/protocols/?limit=1000`, { headers });
+    const response = await axios.get(`${API_URL}/protocols/?limit=2000`, {
+      headers,
+    });
     return response.data;
   } catch (error) {
     // Em caso de erro, exibe uma mensagem de erro no console e lança o erro novamente
@@ -45,7 +47,6 @@ const fetchProtocolByEmailOperator = async (emailOperator) => {
       `${API_URL}/protocols/email_operador/${emailOperator}`,
       { headers }
     );
-
     return response.data;
   } catch (error) {
     // Em caso de erro, exibe uma mensagem de erro no console e lança o erro novamente
@@ -131,23 +132,43 @@ const fetchProtocolsByType = async (protocolType) => {
 };
 
 // Função para atualizar o status do protocolo
-const updateProtocolStatus = async (protocolId, newStatus) => {
+const updateProtocolStatus = async (protocolId, newStatus, operatorEmail) => {
   try {
+    // Primeiro, faz a requisição GET para obter os detalhes do protocolo
 
-    const token = getToken(); // Certifique-se de definir corretamente a função getToken() para obter o token de autorização
-   
+    const token = getToken();
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
-    const response = await axios.put(`${API_URL}/protocol/${protocolId}`, {
-      protocol_status: newStatus,
-    }, { headers });
 
-    
-    return response.data;
+    const responseGet = await axios.get(`${API_URL}/protocol/${protocolId}`, {
+      headers,
+    });
+
+    const currentStatus = responseGet.data.protocol_status;
+    const currentOperator = responseGet.data.email_operador;
+
+    // Verifica se o status atual é diferente do novo status desejado
+    if (currentStatus !== newStatus) {
+      // Se o status for diferente, prossegue com a atualização do status
+      const responsePut = await axios.put(
+        `${API_URL}/protocol/${protocolId}`,
+        {
+          protocol_status: newStatus,
+          email_operador: operatorEmail,
+        },
+        { headers }
+      );
+      return responsePut.data; // Retorna a resposta da requisição PUT
+    } else {
+      // Se o status atual for igual ao novo status, lança um erro indicando que não é possível atualizar o status
+      throw new Error(
+        `O protocolo já possui o status desejado: ${currentStatus}. Atualizado por: ${currentOperator}`
+      );
+    }
   } catch (error) {
-    console.error('Erro ao atualizar status do protocolo:', error);
+    console.error('Erro ao atualizar o status do protocolo:', error);
     throw error;
   }
 };

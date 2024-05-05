@@ -11,8 +11,8 @@ const Login = () => {
         <Container> {/* Container para envolver os elementos */}
           <Row className="d-flex justify-content-center"> {/* Linha flexível para alinhar e distribuir os itens */}
             <Col xl="6"> {/* Coluna para ocupar 6 espaços na grade em telas extra largas */}
-              <div className="copyright text-center text-lg-5 text-muted pt-8"> {/* Div para texto de direitos autorais */}
-                © {new Date().getFullYear()}{" "} {/* Exibe o ano atual */}
+              <div className="copyright text-center text-lg-5 text-muted pt-7"> {/* Div para texto de direitos autorais */}
+                © {new Date().getFullYear()} {/* Exibe o ano atual */}
                 <a
                   className="font-weight-bold ml-1"
                   href="#"

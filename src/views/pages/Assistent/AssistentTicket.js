@@ -57,23 +57,24 @@ const AssistentTicket = () => {
 
   // Função para lidar com o clique nos itens do menu de ação
   const handleMenuItemClick = async (action, protocolId) => {
-   
     try {
       let newStatus = '';
+      const operatorEmail = localStorage.getItem('userEmail');
       if (action === 'open') {
         newStatus = 'Aberto';
       } else if (action === 'close') {
         newStatus = 'Fechado';
       }
       if (newStatus !== '') {
-        await updateProtocolStatus(protocolId, newStatus);
-       
+        const updatedProtocol = await updateProtocolStatus(protocolId, newStatus, operatorEmail);
         // Define a mensagem de alerta
-        setAlertMessage('Status atualizado com sucesso!');
+        setAlertMessage('Status atualizado com sucesso: ' + updatedProtocol.protocol_status);
+        
         // Refetch dos protocolos após a alteração do status
         await fetchProtocolsData();
         // Atualiza a página atual da paginação para 1
         setCurrentPage(1);
+  
         // Define um timeout para limpar a mensagem de alerta após 5 segundos
         setTimeout(() => {
           setAlertMessage('');
@@ -81,9 +82,14 @@ const AssistentTicket = () => {
       }
     } catch (error) {
       console.error('Erro ao atualizar o status:', error);
+      // Define a mensagem de erro
+      setAlertMessage('Erro: ' + error.message);
+      setTimeout(() => {
+        setAlertMessage('');
+      }, 5000);
     }
   };
-
+  
   return (
     <>
       <Header />
