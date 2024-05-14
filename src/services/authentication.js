@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 // URL da API de autenticação
-const API_URL = 'https://smartprotocols.intgov.com.br/auth';
+const API_URL = 'https://api.protocols.smartchats.app/auth';
 
 // Função assíncrona para realizar o login do usuário
 export const login = async (email, password) => {

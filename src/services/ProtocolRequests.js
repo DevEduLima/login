@@ -6,7 +6,7 @@ import axios from 'axios';
 import { getToken } from './authenticationService';
 
 // URL base da API
-const API_URL = 'https://smartprotocols.intgov.com.br';
+const API_URL = 'https://api.protocols.smartchats.app';
 
 // Função para buscar todos os protocolos
 const fetchAllProtocols = async () => {

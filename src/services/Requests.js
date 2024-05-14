@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from './authenticationService'; // Importa a função getToken do arquivo authUtils.js
 
-const API_URL = 'https://smartprotocols.intgov.com.br';
+const API_URL = 'https://api.protocols.smartchats.app';
 
 // Função para fazer a requisição de criação de usuário
 const createUser = async (userData) => {
