@@ -6,14 +6,16 @@ import TableColumns from 'components/Table/tableColumns.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
 import ProtocolCounter from 'components/ProtocolCounter/ProtocolCounter.js';
 import {
-  fetchProtocolsByType,
+  fetchProtocolsByStatusSetor,
   fetchProtocolByEmailOperator,
   updateProtocolStatus,
 } from 'services/ProtocolRequests.js';
 
+// Função para definir as opções de menu de ação personalizadas
 const customActionMenuOptions = () => {
   return [
-    { action: 'open', label: 'Abrir Protocolo' },
+    // Exemplo de opção de menu de ação
+    // { action: 'open', label: 'Abrir Protocolo' },
     { action: 'close', label: 'Fechar Protocolo' },
   ];
 };
@@ -48,37 +50,70 @@ const TicketService = () => {
   // E-mail do usuário logado
   const userEmail = localStorage.getItem('userEmail');
 
-  // Função para buscar os dados dos protocolos
-  const fetchProtocolsData = useCallback(async () => {
+  // Função para buscar os dados dos protocolos do tipo AT
+  const fetchProtocolsByTypeAndStatus = useCallback(async () => {
     try {
-      // Buscar protocolos do tipo AT
-      const protocolsDataAT = await fetchProtocolsByType('AT');
-      setProtocolsAT(protocolsDataAT);
-      setTotalProtocolsAT(protocolsDataAT.length);
+      const setor = 'Atendimento';
+      const status = 'Fechado';
+      const protocolsDataAT = await fetchProtocolsByStatusSetor(setor, status);
+      if (protocolsDataAT && protocolsDataAT.length > 0) {
+        setProtocolsAT(protocolsDataAT);
+        setTotalProtocolsAT(protocolsDataAT.length);
+      } else {
+        // Se nenhum protocolo for encontrado, limpa o estado e exibe uma mensagem de alerta
+        setProtocolsAT([]);
+        setTotalProtocolsAT(0);
+        setAlertMessageAT(
+          'Nenhum protocolo encontrado com este setor e status.'
+        );
+        // Definir um timeout para limpar a mensagem de alerta após 5 segundos
+        setTimeout(() => {
+          setAlertMessageAT('');
+        }, 5000);
+      }
       setLoadingAT(false);
+    } catch (error) {
+      console.error('Erro ao buscar dados do Setor e Status:', error);
+      setLoadingAT(false);
+      // Limpar o estado da tabela 1 em caso de erro 404
+      if (error.response && error.response.status === 404) {
+        setProtocolsAT([]);
+        setTotalProtocolsAT(0);
+        setAlertMessageAT(
+          'Nenhum protocolo encontrado com este setor e status.'
+        );
+        // Definir um timeout para limpar a mensagem de alerta após 5 segundos
+        setTimeout(() => {
+          setAlertMessageAT('');
+        }, 5000);
+      }
+    }
+  }, []);
 
-      // Buscar protocolos por E-mail
+  // Função para buscar os dados dos protocolos por e-mail
+  const fetchProtocolsByEmail = useCallback(async () => {
+    try {
       const protocolsByEmail = await fetchProtocolByEmailOperator(userEmail);
       setProtocolsByEmail(protocolsByEmail);
       setTotalProtocolsByEmail(protocolsByEmail.length);
       setLoadingByEmail(false);
     } catch (error) {
-      console.error('Erro ao buscar dados:', error);
-      setLoadingAT(false);
+      console.error('Erro ao buscar dados por e-mail:', error);
       setLoadingByEmail(false);
     }
   }, [userEmail]);
 
   // Efeito para buscar os dados dos protocolos ao montar o componente
   useEffect(() => {
-    fetchProtocolsData();
-  }, [fetchProtocolsData]);
+    fetchProtocolsByTypeAndStatus();
+    fetchProtocolsByEmail();
+  }, [fetchProtocolsByTypeAndStatus, fetchProtocolsByEmail]);
 
   // Função para lidar com cliques nos itens do menu de ação
   const handleMenuItemClick = async (action, protocolId, type) => {
     try {
       const newStatusMap = {
-        open: 'Aberto',
+        // open: 'Aberto',
         close: 'Fechado',
       };
       const newStatus = newStatusMap[action];
@@ -96,6 +131,7 @@ const TicketService = () => {
         } else if (type === 'Email') {
           setAlertMessageByEmail(message);
         }
+        // Definir um timeout para limpar a mensagem de alerta após 5 segundos
         setTimeout(() => {
           if (type === 'AT') {
             setAlertMessageAT('');
@@ -103,6 +139,9 @@ const TicketService = () => {
             setAlertMessageByEmail('');
           }
         }, 5000);
+
+        await fetchProtocolsByEmail();
+        await fetchProtocolsByTypeAndStatus();
       }
     } catch (error) {
       console.error('Erro ao atualizar o status:', error);
@@ -112,6 +151,7 @@ const TicketService = () => {
       } else if (type === 'Email') {
         setAlertMessageByEmail(errorMessage);
       }
+      // Definir um timeout para limpar a mensagem de alerta após 5 segundos
       setTimeout(() => {
         if (type === 'AT') {
           setAlertMessageAT('');
@@ -119,14 +159,6 @@ const TicketService = () => {
           setAlertMessageByEmail('');
         }
       }, 5000);
-    } finally {
-      await fetchProtocolsData();
-      // Limpar mensagens de alerta após a atualização dos protocolos
-      if (type === 'AT') {
-        setAlertMessageAT('');
-      } else if (type === 'Email') {
-        setAlertMessageByEmail('');
-      }
     }
   };
 
@@ -151,8 +183,9 @@ const TicketService = () => {
             {/* Renderizar mensagem de alerta para protocolos AT */}
             {alertMessageAT && alertLocation(userEmail, 'AT') === 'AT' && (
               <div
-                className="alert alert-success alert-dismissible fade show text-center custom-alert"
+                className="alert alert-info alert-dismissible fade show text-center custom-alert"
                 role="alert"
+                type="info"
               >
                 {alertMessageAT}
               </div>
@@ -185,14 +218,11 @@ const TicketService = () => {
                   id: protocol.id,
                   acao: 'Ação',
                 }))}
-                includeActionColumn={true}
+                includeActionColumn={false} // Alterado para false
                 enableRowClick={true}
                 visibleColumns={columnOrder}
                 columnsConfig={columnsConfig}
                 actionMenuOptions={customActionMenuOptions()}
-                onMenuItemClick={(action, protocolId) =>
-                  handleMenuItemClick(action, protocolId, 'AT')
-                }
                 currentPage={currentPageAT}
                 setCurrentPage={setCurrentPageAT}
               />
@@ -246,7 +276,7 @@ const TicketService = () => {
                   id: protocol.id,
                   acao: 'Ação',
                 }))}
-                includeActionColumn={true}
+                includeActionColumn={true} // Alterado para true
                 enableRowClick={true}
                 visibleColumns={columnOrder}
                 columnsConfig={columnsConfig}

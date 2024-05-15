@@ -22,7 +22,7 @@ const Supervisor = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const columnOrder = ['protocolo', 'status', 'nome', 'email', 'data','atendente', 'acao'];
+  const columnOrder = ['protocolo','setor', 'status', 'nome', 'email', 'data', 'acao'];
   const columnsConfig = TableColumns(false, columnOrder);
 
   const fetchProtocolsData = async () => {
@@ -71,7 +71,7 @@ const Supervisor = () => {
           <CardHeader>
             <div className="d-flex justify-content-between p-2 mb-3">
               <h3 className="d-flex align-items-center text-uppercase text-primary">
-                Contagem de Protocolos
+                Protocolos
               </h3>
               <ProtocolCounter totalProtocols={totalProtocols} />
             </div>

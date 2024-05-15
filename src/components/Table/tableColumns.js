@@ -2,7 +2,6 @@
 
 // Esta função retorna um objeto contendo definições de colunas para uma tabela, com opções para mostrar colunas especiais
 const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
-  
   // Definição da coluna de ID do usuário
   user: {
     accessorKey: 'id', // Chave de acesso aos dados do usuário
@@ -10,7 +9,12 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     grow: false, // Indica se a coluna pode expandir
     size: 40, // Tamanho da coluna
     show: showSpecialColumns, // Indica se a coluna deve ser exibida
-
+    muiTableHeadCellProps: {
+      align: 'center',
+    },
+    muiTableBodyCellProps: {
+      align: 'center',
+    },
   },
   // Definição da coluna de protocolo
   protocolo: {
@@ -27,11 +31,26 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
       align: 'center',
     },
   },
+  setor: {
+    accessorKey: 'setor',
+    header: 'Setor',
+    grow: false,
+    size: 50,
+    align: 'center',
+    // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
+    show: !visibleColumns.length || visibleColumns.includes('setor'),
+    muiTableHeadCellProps: {
+      align: 'center',
+    },
+    muiTableBodyCellProps: {
+      align: 'center',
+    },
+  },
   status: {
     accessorKey: 'status',
     header: 'Status',
     grow: false,
-    size: 30,
+    size: 50,
     align: 'center',
     show: visibleColumns.includes('status'), // Verifica se a coluna está incluída nas colunas visíveis
     muiTableHeadCellProps: {
@@ -105,7 +124,6 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     show: !visibleColumns.length || visibleColumns.includes('data'),
     muiTableHeadCellProps: {
       align: 'center',
-      
     },
     muiTableBodyCellProps: {
       align: 'center',

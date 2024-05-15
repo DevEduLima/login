@@ -59,14 +59,14 @@ const AssistentTicket = () => {
   const handleMenuItemClick = async (action, protocolId) => {
     try {
       let newStatus = '';
-      const operatorEmail = localStorage.getItem('userEmail');
+
       if (action === 'open') {
         newStatus = 'Aberto';
       } else if (action === 'close') {
         newStatus = 'Fechado';
       }
       if (newStatus !== '') {
-        const updatedProtocol = await updateProtocolStatus(protocolId, newStatus, operatorEmail);
+        const updatedProtocol = await updateProtocolStatus(protocolId, newStatus);
         // Define a mensagem de alerta
         setAlertMessage('Status atualizado com sucesso: ' + updatedProtocol.protocol_status);
         

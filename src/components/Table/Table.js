@@ -14,7 +14,7 @@ const Table = ({
   customActionMenuOptions,
   actionMenuOptions,
   onMenuItemClick,
-  columnFilterDisplayMode= "popover",
+ 
 }) => {
   // Estado para controlar a abertura do diálogo de detalhes do protocolo
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -23,7 +23,7 @@ const Table = ({
   // Estado para controlar o índice da página atual
   const [pageIndex, setPageIndex] = useState(0);
   // Estado para controlar o número de linhas por página
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   // Estado para armazenar o elemento ancora do menu de ação
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -173,7 +173,6 @@ const Table = ({
         <div className="rows-per-page-control align-items-center">
           <span className="pr-1 text-center">Linhas por Página:</span>
           <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-            <option value={5}>5</option>
             <option value={10}>10</option>
             <option value={25}>25</option>
             <option value={50}>50</option>

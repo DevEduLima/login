@@ -131,8 +131,28 @@ const fetchProtocolsByType = async (protocolType) => {
   }
 };
 
+// Função para buscar protocolos pelo status e setor
+const fetchProtocolsByStatusSetor = async (setor, status) => {
+  try {
+    const token = getToken();
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+    const response = await axios.get(
+      `${API_URL}/protocol_setor_status/${setor}/${status}`,
+      { headers }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar protocolos por tipo:', error.message);
+    throw error;
+  }
+};
+
 // Função para atualizar o status do protocolo
-const updateProtocolStatus = async (protocolId, newStatus, operatorEmail) => {
+const updateProtocolStatus = async (protocolId, newStatus) => {
   try {
     // Primeiro, faz a requisição GET para obter os detalhes do protocolo
 
@@ -156,7 +176,6 @@ const updateProtocolStatus = async (protocolId, newStatus, operatorEmail) => {
         `${API_URL}/protocol/${protocolId}`,
         {
           protocol_status: newStatus,
-          email_operador: operatorEmail,
         },
         { headers }
       );
@@ -181,4 +200,5 @@ export {
   fetchProtocolByCode,
   fetchProtocolsByType,
   updateProtocolStatus,
+  fetchProtocolsByStatusSetor,
 };
