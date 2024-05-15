@@ -16,9 +16,9 @@ const InspectionTicket = () => {
   const columnOrder = [
     'protocolo',
     'setor',
+    'status',
     'nome',
     'numero',
-    'email',
     'data',
     'acao',
   ];

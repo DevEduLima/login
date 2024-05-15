@@ -43,7 +43,7 @@ const TicketService = () => {
   const [alertMessageByEmail, setAlertMessageByEmail] = useState('');
 
   // Definição da ordem das colunas na tabela
-  const columnOrder = ['protocolo', 'status', 'nome', 'email', 'data', 'acao'];
+  const columnOrder = ['protocolo', 'status', 'nome', 'numero', 'data', 'acao'];
   // Configuração das colunas da tabela
   const columnsConfig = TableColumns(false, columnOrder);
 

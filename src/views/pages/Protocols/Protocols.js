@@ -36,7 +36,7 @@ const Protocols = () => {
     'protocolo',
     'status',
     'nome',
-    'email',
+    'numero',
     'data',
     'acao',
     'atendente',

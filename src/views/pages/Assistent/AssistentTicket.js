@@ -30,7 +30,7 @@ const AssistentTicket = () => {
     'status',
     'setor',
     'nome',
-    'email',
+    'numero',
     'data',
     'acao',
   ];
