@@ -22,7 +22,16 @@ const Supervisor = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const columnOrder = ['protocolo','setor', 'status', 'nome', 'numero', 'data', 'acao'];
+  const columnOrder = [
+    'protocolo',
+    'status',
+    'nome',
+    'email',
+    'numero',
+    'data',
+    'acao',
+    'atendente',
+  ];
   const columnsConfig = TableColumns(false, columnOrder);
 
   const fetchProtocolsData = async () => {
@@ -38,7 +47,26 @@ const Supervisor = () => {
   };
 
   useEffect(() => {
+    const fetchProtocolsData = async () => {
+      try {
+        const protocolsData = await fetchAllProtocols();
+        setProtocols(protocolsData);
+        setTotalProtocols(protocolsData.length);
+        setLoading(false);
+      } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+        setLoading(false);
+      }
+    };
+
+    // Carrega os protocolos ao montar o componente
     fetchProtocolsData();
+
+    // Define um intervalo para refetch a cada 60 segundos
+    const intervalId = setInterval(fetchProtocolsData, 60000);
+
+    // Limpa o intervalo quando o componente é desmontado
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleMenuItemClick = async (action, protocolId) => {

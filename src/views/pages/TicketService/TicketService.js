@@ -43,7 +43,7 @@ const TicketService = () => {
   const [alertMessageByEmail, setAlertMessageByEmail] = useState('');
 
   // Definição da ordem das colunas na tabela
-  const columnOrder = ['protocolo', 'status', 'nome', 'numero', 'data', 'acao'];
+  const columnOrder = ['protocolo', 'status', 'nome', 'email','numero', 'data', 'acao'];
   // Configuração das colunas da tabela
   const columnsConfig = TableColumns(false, columnOrder);
 
@@ -105,8 +105,19 @@ const TicketService = () => {
 
   // Efeito para buscar os dados dos protocolos ao montar o componente
   useEffect(() => {
-    fetchProtocolsByTypeAndStatus();
-    fetchProtocolsByEmail();
+    const fetchData = () => {
+      fetchProtocolsByTypeAndStatus();
+      fetchProtocolsByEmail();
+    };
+  
+    // Chamar fetchData imediatamente ao montar o componente
+    fetchData();
+  
+    // Definir um intervalo para chamar fetchData a cada 60 segundos
+    const intervalId = setInterval(fetchData, 60000);
+  
+    // Limpar o intervalo quando o componente for desmontado para evitar vazamento de memória
+    return () => clearInterval(intervalId);
   }, [fetchProtocolsByTypeAndStatus, fetchProtocolsByEmail]);
 
   // Função para lidar com cliques nos itens do menu de ação

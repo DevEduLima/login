@@ -31,11 +31,12 @@ const Protocols = () => {
   // Estado para controlar a página atual da paginação
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Definir a ordem das colunas na tabela
+  // Definir a exibição das colunas na tabela
   const columnOrder = [
     'protocolo',
     'status',
     'nome',
+    'email',
     'numero',
     'data',
     'acao',
@@ -68,9 +69,28 @@ const Protocols = () => {
 
   // Efeito para carregar os protocolos ao montar o componente
   useEffect(() => {
+    const fetchProtocolsData = async () => {
+      try {
+        const protocolsData = await fetchAllProtocols();
+        setProtocols(protocolsData);
+        setTotalProtocols(protocolsData.length);
+        setLoading(false);
+      } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+        setLoading(false);
+      }
+    };
+  
+    // Carrega os protocolos ao montar o componente
     fetchProtocolsData();
+  
+    // Define um intervalo para refetch a cada 60 segundos
+    const intervalId = setInterval(fetchProtocolsData, 60000);
+  
+    // Limpa o intervalo quando o componente é desmontado
+    return () => clearInterval(intervalId);
   }, []);
-
+  
   // Função para lidar com o clique nos itens do menu de ação
   const handleMenuItemClick = async (action, protocolId) => {
     try {

@@ -30,6 +30,7 @@ const AssistentTicket = () => {
     'status',
     'setor',
     'nome',
+    'email',
     'numero',
     'data',
     'acao',
@@ -52,9 +53,29 @@ const AssistentTicket = () => {
 
   // Efeito para carregar os protocolos ao montar o componente
   useEffect(() => {
+    const fetchProtocolsData = async () => {
+      try {
+        const protocolsData = await fetchProtocolsByType('AB');
+        setProtocols(protocolsData);
+        setTotalProtocols(protocolsData.length);
+        setLoading(false);
+        console.log('Dados refetched após 60 segundos');
+      } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+        setLoading(false);
+      }
+    };
+  
+    // Carrega os protocolos ao montar o componente
     fetchProtocolsData();
-  }, []);
+  
+    // Define um intervalo para refetch a cada 60 segundos
+    const intervalId = setInterval(fetchProtocolsData, 60000);
 
+    // Limpa o intervalo quando o componente é desmontado
+    return () => clearInterval(intervalId);
+  }, []);
+  
   // Função para lidar com o clique nos itens do menu de ação
   const handleMenuItemClick = async (action, protocolId) => {
     try {

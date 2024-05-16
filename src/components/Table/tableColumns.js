@@ -35,7 +35,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'setor',
     header: 'Setor',
     grow: false,
-    size: 50,
+    size: 30,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('setor'),
@@ -50,7 +50,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'status',
     header: 'Status',
     grow: false,
-    size: 50,
+    size: 30,
     align: 'center',
     show: visibleColumns.includes('status'), // Verifica se a coluna está incluída nas colunas visíveis
     muiTableHeadCellProps: {
@@ -102,7 +102,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'numero',
     header: 'Número',
     grow: false,
-    size: 40,
+    size: 30,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('numero'),
@@ -133,7 +133,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
     accessorKey: 'email_operador', // Alterado para 'email_operador'
     header: 'Atendente',
     grow: true,
-    size: 250,
+    size: 150,
     align: 'center',
     // Verifica se não há colunas visíveis definidas ou se a coluna está incluída nas colunas visíveis
     show: !visibleColumns.length || visibleColumns.includes('atendente'),
