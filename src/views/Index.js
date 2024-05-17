@@ -1,7 +1,28 @@
-import React, { useState } from 'react'; // Importa o módulo React e a função useState
-import classnames from 'classnames'; // Importa a função classnames para concatenar classes de forma condicional
-import Chart from 'chart.js'; // Importa a biblioteca Chart.js
-import { Line, Bar } from 'react-chartjs-2'; // Importa os componentes de linha e barra do Chart.js para o React
+/*!
+
+=========================================================
+* Argon Dashboard React - v1.2.4
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
+* Copyright 2024 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+import { useState } from "react";
+// node.js library that concatenates classes (strings)
+import classnames from "classnames";
+// javascipt plugin for creating charts
+import Chart from "chart.js";
+// react plugin used to create charts
+import { Line, Bar } from "react-chartjs-2";
+// reactstrap components
 import {
   Button,
   Card,
@@ -15,92 +36,72 @@ import {
   Container,
   Row,
   Col,
-} from 'reactstrap'; // Importa componentes do Reactstrap
+} from "reactstrap";
+
+// core components
 import {
   chartOptions,
   parseOptions,
   chartExample1,
   chartExample2,
-} from 'variables/charts.js'; // Importa variáveis relacionadas aos gráficos
-import Header from 'components/Headers/Header.js'; // Importa o componente Header
+} from "variables/charts.js";
 
-// Componente Index para a página inicial
+import Header from "components/Headers/Header.js";
+
 const Index = (props) => {
-  const [activeNav, setActiveNav] = useState(1); // Define o estado para a navegação ativa e a função para atualizá-lo
-  const [chartExample1Data, setChartExample1Data] = useState('data1'); // Define o estado para os dados do exemplo de gráfico e a função para atualizá-lo
+  const [activeNav, setActiveNav] = useState(1);
+  const [chartExample1Data, setChartExample1Data] = useState("data1");
 
   if (window.Chart) {
-    // Verifica se a biblioteca Chart.js está disponível no ambiente
-    parseOptions(Chart, chartOptions()); // Analisa as opções de gráfico
+    parseOptions(Chart, chartOptions());
   }
 
-  // Função para alternar entre os itens de navegação
   const toggleNavs = (e, index) => {
-    e.preventDefault(); // Previne o comportamento padrão do evento
-    setActiveNav(index); // Atualiza o estado da navegação ativa
-    setChartExample1Data('data' + index); // Atualiza os dados do exemplo de gráfico
+    e.preventDefault();
+    setActiveNav(index);
+    setChartExample1Data("data" + index);
   };
-
   return (
     <>
-      <Header/> {/* Renderiza o componente Header */}
-      {/* Conteúdo da página */}
+      <Header />
+      {/* Page content */}
       <Container className="mt--7" fluid>
-        {/* Container fluido para envolver os elementos */}
         <Row>
-          {/* Linha para dividir os elementos horizontalmente */}
           <Col className="mb-5 mb-xl-0" xl="8">
-            {/* Coluna para ocupar 8 espaços na grade */}
             <Card className="bg-gradient-default shadow">
-              {/* Cartão com gradiente de fundo e sombra */}
               <CardHeader className="bg-transparent">
-                {/* Cabeçalho do cartão transparente */}
                 <Row className="align-items-center">
-                  {/* Linha para alinhar os itens verticalmente */}
                   <div className="col">
-                    {/* Div para ocupar todo o espaço disponível */}
                     <h6 className="text-uppercase text-light ls-1 mb-1">
-                      Principal
+                      Overview
                     </h6>
-                    {/* Título do cabeçalho */}
-                    <h2 className="text-white mb-0">Visão Principal</h2>
-                    {/* Título principal */}
+                    <h2 className="text-white mb-0">Sales value</h2>
                   </div>
                   <div className="col">
-                    {/* Div para ocupar todo o espaço disponível */}
                     <Nav className="justify-content-end" pills>
-                      {/* Navegação de pílulas justificada à direita */}
                       <NavItem>
-                        {/* Item de navegação */}
-                        {/* Link para o mês */}
                         <NavLink
-                          className={classnames('py-2 px-3', {
-                            active: activeNav === 1, // Adiciona a classe 'active' se a navegação estiver ativa
+                          className={classnames("py-2 px-3", {
+                            active: activeNav === 1,
                           })}
-                          href="#"
-                          onClick={(e) => toggleNavs(e, 1)} // Função para alternar entre os itens de navegação
+                          href="#pablo"
+                          onClick={(e) => toggleNavs(e, 1)}
                         >
-                          <span className="d-none d-md-block">Mês</span>
-                          {/* Texto visível em dispositivos maiores */}
+                          <span className="d-none d-md-block">Month</span>
                           <span className="d-md-none">M</span>
-                          {/* Texto visível em dispositivos menores */}
                         </NavLink>
                       </NavItem>
                       <NavItem>
-                        {/* Item de navegação */}
-                        {/* Link para a semana */}
                         <NavLink
-                          className={classnames('py-2 px-3', {
-                            active: activeNav === 2, // Adiciona a classe 'active' se a navegação estiver ativa
+                          className={classnames("py-2 px-3", {
+                            active: activeNav === 2,
                           })}
                           data-toggle="tab"
                           href="#pablo"
-                          onClick={(e) => toggleNavs(e, 2)} // Função para alternar entre os itens de navegação
+                          onClick={(e) => toggleNavs(e, 2)}
                         >
-                          <span className="d-none d-md-block">Semana</span>
-                          {/* Texto visível em dispositivos maiores */}
-                          <span className="d-md-none">S</span>
-                          {/* Texto visível em dispositivos menores */}
+                          <span className="d-none d-md-block">Week</span>
+                          <span className="d-md-none">W</span>
                         </NavLink>
                       </NavItem>
                     </Nav>
@@ -108,46 +109,35 @@ const Index = (props) => {
                 </Row>
               </CardHeader>
               <CardBody>
-                {/* Corpo do cartão */}
-                {/* Gráfico de linha */}
+                {/* Chart */}
                 <div className="chart">
-                  {/* Div para renderizar o gráfico */}
                   <Line
-                    data={chartExample1[chartExample1Data]} // Dados do gráfico
-                    options={chartExample1.options} // Opções do gráfico
-                    getDatasetAtEvent={(e) => console.log(e)} // Função para obter o conjunto de dados no evento
+                    data={chartExample1[chartExample1Data]}
+                    options={chartExample1.options}
+                    getDatasetAtEvent={(e) => console.log(e)}
                   />
                 </div>
               </CardBody>
             </Card>
           </Col>
           <Col xl="4">
-            {/* Coluna para ocupar 4 espaços na grade */}
             <Card className="shadow">
-              {/* Cartão com sombra */}
               <CardHeader className="bg-transparent">
-                {/* Cabeçalho do cartão transparente */}
                 <Row className="align-items-center">
-                  {/* Linha para alinhar os itens verticalmente */}
                   <div className="col">
-                    {/* Div para ocupar todo o espaço disponível */}
                     <h6 className="text-uppercase text-muted ls-1 mb-1">
                       Performance
                     </h6>
-                    {/* Título do cabeçalho */}
                     <h2 className="mb-0">Total orders</h2>
-                    {/* Título principal */}
                   </div>
                 </Row>
               </CardHeader>
               <CardBody>
-                {/* Corpo do cartão */}
-                {/* Gráfico de barra */}
+                {/* Chart */}
                 <div className="chart">
-                  {/* Div para renderizar o gráfico */}
                   <Bar
-                    data={chartExample2.data} // Dados do gráfico
-                    options={chartExample2.options} // Opções do gráfico
+                    data={chartExample2.data}
+                    options={chartExample2.options}
                   />
                 </div>
               </CardBody>
@@ -155,83 +145,18 @@ const Index = (props) => {
           </Col>
         </Row>
         <Row className="mt-5">
-          {/* Linha para dividir os elementos horizontalmente */}
           <Col className="mb-5 mb-xl-0" xl="8">
-            {/* Coluna para ocupar 8 espaços na grade */}
             <Card className="shadow">
-              {/* Cartão com sombra */}
               <CardHeader className="border-0">
-                {/* Cabeçalho do cartão sem borda */}
                 <Row className="align-items-center">
-                  {/* Linha para alinhar os itens verticalmente */}
                   <div className="col">
-                    {/* Div para ocupar todo o espaço disponível */}
                     <h3 className="mb-0">Page visits</h3>
-                    {/* Título principal */}
                   </div>
                   <div className="col text-right">
-                    {/* Div para ocupar todo o espaço disponível */}
                     <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()} // Previne o comportamento padrão do evento
-                      size="sm"
-                    >
-                      See all {/* Botão para ver todos */}
-                    </Button>
-                  </div>
-                </Row>
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                {/* Tabela responsiva */}
-                <thead className="thead-light">
-                  {/* Cabeçalho da tabela */}
-                  <tr>
-                    {/* Linha da tabela */}
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    {/* Cabeçalho da coluna */}
-                    <th scope="col">Bounce rate</th>
-                  </tr>
-                </thead>
-                {/* Corpo da tabela */}
-                <tbody>
-                  {/* Linha da tabela */}
-                  <tr>
-                    <th scope="row">/argon/</th>
-                    {/* Célula com o nome da página */}
-                    <td>4,569</td> {/* Célula com o número de visitantes */}
-                    <td>340</td> {/* Célula com o número de usuários únicos */}
-                    <td>
-                      {/* Célula com a taxa de rejeição */}
-                      <i className="fas fa-arrow-up text-success mr-3"/>46,53%
-                      {/* Ícone de seta para cima */}
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card>
-          </Col>
-          <Col xl="4">
-            {/* Coluna para ocupar 4 espaços na grade */}
-            <Card className="shadow">
-              {/* Cartão com sombra */}
-              <CardHeader className="border-0">
-                {/* Cabeçalho do cartão sem borda */}
-                <Row className="align-items-center">
-                  {/* Linha para alinhar os itens verticalmente */}
-                  <div className="col">
-                    {/* Div para ocupar todo o espaço disponível */}
-                    <h3 className="mb-0">Social traffic</h3>
-                    {/* Título principal */}
-                  </div>
-                  <div className="col text-right">
-                    {/* Div para ocupar todo o espaço disponível */}
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()} // Previne o comportamento padrão do evento
+                      onClick={(e) => e.preventDefault()}
                       size="sm"
                     >
                       See all
@@ -240,36 +165,162 @@ const Index = (props) => {
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
-                {/* Tabela responsiva */}
                 <thead className="thead-light">
-                  {/* Cabeçalho da tabela */}
                   <tr>
-                    {/* Linha da tabela */}
-                    <th scope="col">Referral</th> {/* Cabeçalho da coluna */}
-                    <th scope="col">Visitors</th> {/* Cabeçalho da coluna */}
-                    <th scope="col"/> {/* Cabeçalho da coluna vazio */}
+                    <th scope="col">Page name</th>
+                    <th scope="col">Visitors</th>
+                    <th scope="col">Unique users</th>
+                    <th scope="col">Bounce rate</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Corpo da tabela */}
                   <tr>
-                    {/* Linha da tabela */}
-                    <th scope="row">Facebook</th>
-                    {/* Célula com o nome do site de referência */}
-                    <td>1,480</td> {/* Célula com o número de visitantes */}
+                    <th scope="row">/argon/</th>
+                    <td>4,569</td>
+                    <td>340</td>
                     <td>
-                      {/* Célula com a barra de progresso */}
+                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">/argon/index.html</th>
+                    <td>3,985</td>
+                    <td>319</td>
+                    <td>
+                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
+                      46,53%
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">/argon/charts.html</th>
+                    <td>3,513</td>
+                    <td>294</td>
+                    <td>
+                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
+                      36,49%
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">/argon/tables.html</th>
+                    <td>2,050</td>
+                    <td>147</td>
+                    <td>
+                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">/argon/profile.html</th>
+                    <td>1,795</td>
+                    <td>190</td>
+                    <td>
+                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
+                      46,53%
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Card>
+          </Col>
+          <Col xl="4">
+            <Card className="shadow">
+              <CardHeader className="border-0">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h3 className="mb-0">Social traffic</h3>
+                  </div>
+                  <div className="col text-right">
+                    <Button
+                      color="primary"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                      size="sm"
+                    >
+                      See all
+                    </Button>
+                  </div>
+                </Row>
+              </CardHeader>
+              <Table className="align-items-center table-flush" responsive>
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">Referral</th>
+                    <th scope="col">Visitors</th>
+                    <th scope="col" />
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Facebook</th>
+                    <td>1,480</td>
+                    <td>
                       <div className="d-flex align-items-center">
-                        {/* Div para alinhar os itens verticalmente */}
                         <span className="mr-2">60%</span>
-                        {/* Porcentagem de visitantes */}
                         <div>
-                          {/* Div para renderizar a barra de progresso */}
                           <Progress
                             max="100"
                             value="60"
-                            barClassName="bg-gradient-danger" // Classe para estilizar a barra de progresso
-                         />
+                            barClassName="bg-gradient-danger"
+                          />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Facebook</th>
+                    <td>5,480</td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <span className="mr-2">70%</span>
+                        <div>
+                          <Progress
+                            max="100"
+                            value="70"
+                            barClassName="bg-gradient-success"
+                          />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Google</th>
+                    <td>4,807</td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <span className="mr-2">80%</span>
+                        <div>
+                          <Progress max="100" value="80" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Instagram</th>
+                    <td>3,678</td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <span className="mr-2">75%</span>
+                        <div>
+                          <Progress
+                            max="100"
+                            value="75"
+                            barClassName="bg-gradient-info"
+                          />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">twitter</th>
+                    <td>2,645</td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <span className="mr-2">30%</span>
+                        <div>
+                          <Progress
+                            max="100"
+                            value="30"
+                            barClassName="bg-gradient-warning"
+                          />
                         </div>
                       </div>
                     </td>

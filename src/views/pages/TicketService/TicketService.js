@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, Container, CardHeader } from 'reactstrap';
-import Header from 'components/Headers/Header.js';
+// import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
 import TableColumns from 'components/Table/tableColumns.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
@@ -180,8 +180,8 @@ const TicketService = () => {
 
   return (
     <>
-      <Header />
-      <Container className="mt--7" fluid>
+      {/* <Header /> */}
+      <Container className="mt-4" fluid>
         <Card className="shadow">
           <CardHeader>
             <div className="d-flex justify-content-between p-2 mb-3">
