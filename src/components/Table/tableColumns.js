@@ -31,6 +31,20 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
       align: 'center',
     },
   },
+  tipo: {
+    accessorKey: 'tipo',
+    header: 'Tipo',
+    grow: false,
+    size: 30,
+    align: 'center',
+    show: visibleColumns.includes('tipo'), // Verifica se a coluna está incluída nas colunas visíveis
+    muiTableHeadCellProps: {
+      align: 'center',
+    },
+    muiTableBodyCellProps: {
+      align: 'center',
+    },
+  },
   setor: {
     accessorKey: 'setor',
     header: 'Setor',
@@ -60,6 +74,7 @@ const TableColumns = (showSpecialColumns, visibleColumns = []) => ({
       align: 'center',
     },
   },
+
   // Definição da coluna de nome
   nome: {
     accessorKey: 'nome',

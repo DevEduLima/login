@@ -22,7 +22,7 @@ const Header = () => {
                         >
                           Total de horas do assitente{/* Título do card */}
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">350897 H</span> {/* Valor */}
+                        <span className="h2 font-weight-bold mb-0">0000H</span> {/* Valor */}
                       </div>
                       <Col className="col-auto"> {/* Coluna automática para o ícone */}
                         <div className="icon icon-shape bg-danger text-white rounded-circle shadow"> {/* Ícone */}
@@ -32,7 +32,7 @@ const Header = () => {
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
-                        <i className="fa fa-arrow-up" /> 3.48% {/* Percentual de aumento */}
+                        <i className="fa fa-arrow-up" /> 000% {/* Percentual de aumento */}
                       </span>
                     </p>
                   </CardBody>
@@ -50,7 +50,7 @@ const Header = () => {
                         >
                             Total de Protocolos {/* Título do card */}
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">2,356</span> {/* Valor */}
+                        <span className="h2 font-weight-bold mb-0">0000</span> {/* Valor */}
                       </div>
                       <Col className="col-auto"> {/* Coluna automática para o ícone */}
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow"> {/* Ícone */}
@@ -60,9 +60,9 @@ const Header = () => {
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-danger mr-2">
-                        <i className="fas fa-arrow-down" /> 3.48% {/* Percentual de diminuição */}
+                        <i className="fas fa-arrow-down" /> 0000% {/* Percentual de diminuição */}
                       </span>   
-                      <span className="text-nowrap">todo o pe</span> {/* Texto adicional */}
+                      <span className="text-nowrap">****</span> {/* Texto adicional */}
                     </p>
                   </CardBody>
                 </Card>
@@ -79,7 +79,7 @@ const Header = () => {
                         >
                           Protocolo Técnico {/* Título do card */}
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">924</span> {/* Valor */}
+                        <span className="h2 font-weight-bold mb-0">0000</span> {/* Valor */}
                       </div>
                       <Col className="col-auto"> {/* Coluna automática para o ícone */}
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow"> {/* Ícone */}
@@ -89,9 +89,9 @@ const Header = () => {
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-warning mr-2">
-                        <i className="fas fa-arrow-down" /> 1.10% {/* Percentual de diminuição */}
+                        <i className="fas fa-arrow-down" /> 0000% {/* Percentual de diminuição */}
                       </span>   
-                      <span className="text-nowrap">Since yesterday</span> {/* Texto adicional */}
+                      <span className="text-nowrap">****</span> {/* Texto adicional */}
                     </p>
                   </CardBody>
                 </Card>
@@ -108,7 +108,7 @@ const Header = () => {
                         >
                           Protocolos Empresas {/* Título do card */}
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">49,65%</span> {/* Valor */}
+                        <span className="h2 font-weight-bold mb-0">0000%</span> {/* Valor */}
                       </div>
                       <Col className="col-auto"> {/* Coluna automática para o ícone */}
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow"> {/* Ícone */}
@@ -118,9 +118,9 @@ const Header = () => {
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
-                        <i className="fas fa-arrow-up" /> 12% {/* Percentual de aumento */}
+                        <i className="fas fa-arrow-up" /> 0000% {/* Percentual de aumento */}
                       </span>   
-                      <span className="text-nowrap">Since last month</span> {/* Texto adicional */}
+                      <span className="text-nowrap">****</span> {/* Texto adicional */}
                     </p>
                   </CardBody>
                 </Card>

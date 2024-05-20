@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { NavLink as NavLinkRRD, Link, useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import {
+  Button,
   Collapse,
   NavbarBrand,
   NavItem,
@@ -13,7 +14,6 @@ import {
   Col,
   Navbar,
 } from 'reactstrap';
-
 
 const Sidebar = (props) => {
   // Estado para controlar se o menu está aberto ou fechado
@@ -35,12 +35,12 @@ const Sidebar = (props) => {
   // Função para lidar com o logout
   const handleLogoutClick = () => {
     // Limpa os dados do local storage
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('userRole');
-  
+    localStorage.clear();
+
     // Exibe o alerta com um timeout de 3 segundos
-    alert('Você foi desconectado com sucesso. Redirecionando para a página de login.'); 
+    alert(
+      'Você foi desconectado com sucesso. Redirecionando para a página de login.'
+    );
     // Redireciona para a página de login após 3 segundos
     setTimeout(() => {
       navigate('/auth/login');
@@ -134,21 +134,24 @@ const Sidebar = (props) => {
             </Row>
           </div>
           {/* Renderiza os links de navegação */}
-          
-          <Nav navbar>{createLinks(routes)}</Nav>
-          
-          <hr className="my-3"/>
 
+          <Nav navbar>{createLinks(routes)}</Nav>
+
+          <hr className="my-3" />
           {/* Botão de saída (logout) */}
           <Nav className="mb-md-3" navbar>
-            <NavItem className="active-pro active">
-              <NavLink onClick={handleLogoutClick}>
-                <i className="ni ni-user-run" />
+            <NavItem className="active-pro active text-center">
+              <Button
+                color="default"
+                className="px-6 "
+                onClick={handleLogoutClick}
+              >
+                <i className="ni ni-user-run mx-1 align-middle" />
                 Sair
-              </NavLink>
+              </Button>
             </NavItem>
           </Nav>
-          
+
           {/* Renderiza um separador e um link para suporte */}
           {/* <Nav className="mb-md-3" navbar>
             <NavItem className="active-pro active">
@@ -158,7 +161,6 @@ const Sidebar = (props) => {
               </NavLink>
             </NavItem>
           </Nav> */}
-
         </Collapse>
       </Container>
     </Navbar>

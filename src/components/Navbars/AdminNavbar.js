@@ -21,9 +21,8 @@ const AdminNavbar = ({ handleLogout }) => {
 
   // Função para limpar os itens do local storage ao fazer logout
   const handleLogoutClick = () => {
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('userRole');
+    localStorage.clear();
+
     handleLogout(); // Chama a função de logout após limpar o local storage
   };
 

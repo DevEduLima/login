@@ -152,7 +152,7 @@ const Table = ({
           <MRTTableContainer table={table} />
         </div>
       </div>
-      <div className="pagination-controls d-flex justify-content-between align-items-center p-3">
+      <div className="d-flex justify-content-between align-items-center p-3">
         <div className="d-flex align-items-center">
           <Button
             onClick={handlePreviousPage}
@@ -170,7 +170,7 @@ const Table = ({
             Próxima Página
           </Button>
         </div>
-        <div className="rows-per-page-control align-items-center">
+        <div className=" align-items-center">
           <span className="pr-1 text-center">Linhas por Página:</span>
           <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
             <option value={10}>10</option>

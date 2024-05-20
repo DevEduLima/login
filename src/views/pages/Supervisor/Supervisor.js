@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Container, CardHeader } from 'reactstrap';
-// import Header from 'components/Headers/Header.js';
+ import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
 import TableColumns from 'components/Table/tableColumns.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
@@ -29,8 +29,8 @@ const Supervisor = () => {
     'email',
     'numero',
     'data',
+    'tipo',
     'acao',
-    'atendente',
   ];
   const columnsConfig = TableColumns(false, columnOrder);
 
@@ -93,12 +93,12 @@ const Supervisor = () => {
 
   return (
     <>
-      {/* <Header /> */}
-      <Container className="mt-4" fluid>
+      <Header /> 
+      <Container className="mt--7" fluid>
         <Card className="shadow-lg">
           <CardHeader>
             <div className="d-flex justify-content-between p-2 mb-3">
-              <h3 className="d-flex align-items-center text-uppercase text-primary">
+              <h3 className="d-flex align-items-center text-uppercase text-primary mr-2">
                 Protocolos
               </h3>
               <ProtocolCounter totalProtocols={totalProtocols} />
@@ -135,6 +135,7 @@ const Supervisor = () => {
                   email_operador: protocol.email_operador,
                   cod_protocolo: protocol.cod_protocolo,
                   id: protocol.id,
+                  tipo: protocol.type_protocols,
                   acao: 'Ação',
                 }))}
                 includeActionColumn={true}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, Container, CardHeader } from 'reactstrap';
-// import Header from 'components/Headers/Header.js';
+import Header from 'components/Headers/Header.js';
 import Table from 'components/Table/Table.js';
 import TableColumns from 'components/Table/tableColumns.js';
 import LoadingIndicator from 'components/Loading/Loading.js';
@@ -43,7 +43,8 @@ const TicketService = () => {
   const [alertMessageByEmail, setAlertMessageByEmail] = useState('');
 
   // Definição da ordem das colunas na tabela
-  const columnOrder = ['protocolo', 'status', 'nome', 'email','numero', 'data', 'acao'];
+  const columnOrder = ['protocolo', 'status', 'nome','email', 'data'];
+  const columnOrder2 = ['protocolo', 'status', 'nome', 'email',  'numero','data', 'acao'];
   // Configuração das colunas da tabela
   const columnsConfig = TableColumns(false, columnOrder);
 
@@ -54,7 +55,7 @@ const TicketService = () => {
   const fetchProtocolsByTypeAndStatus = useCallback(async () => {
     try {
       const setor = 'Atendimento';
-      const status = 'Fechado';
+      const status = 'Pendente';
       const protocolsDataAT = await fetchProtocolsByStatusSetor(setor, status);
       if (protocolsDataAT && protocolsDataAT.length > 0) {
         setProtocolsAT(protocolsDataAT);
@@ -180,8 +181,8 @@ const TicketService = () => {
 
   return (
     <>
-      {/* <Header /> */}
-      <Container className="mt-4" fluid>
+      <Header />
+      <Container className="mt--7" fluid>
         <Card className="shadow">
           <CardHeader>
             <div className="d-flex justify-content-between p-2 mb-3">
@@ -289,7 +290,7 @@ const TicketService = () => {
                 }))}
                 includeActionColumn={true} // Alterado para true
                 enableRowClick={true}
-                visibleColumns={columnOrder}
+                visibleColumns={columnOrder2}
                 columnsConfig={columnsConfig}
                 actionMenuOptions={customActionMenuOptions()}
                 onMenuItemClick={(action, protocolId) =>
